@@ -8,6 +8,7 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background-color: #d5f1ff;
   overflow: hidden;
+  cursor: url('cursor.cur'), auto;
 }
 
 .container {
