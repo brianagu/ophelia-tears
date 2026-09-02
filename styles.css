@@ -35,7 +35,11 @@ body {
 }
 
 .header-left {
-  flex: 1;
+  flex: 0 0 auto;
+  width: 196px;
+  height: 26px;
+  object-fit: contain;
+  object-position: left center;
 }
 
 .header-center {
