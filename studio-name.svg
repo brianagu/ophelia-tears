@@ -1,0 +1,19 @@
+<svg viewBox="0 0 1300 800" xmlns="http://www.w3.org/2000/svg" width="1300" height="800">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital@0;1&display=swap');
+      .studio-text {
+        font-family: 'Warnock Pro', 'Crimson Text', serif;
+        font-size: 343px;
+        font-weight: 300;
+        font-style: italic;
+        fill: #ac5353;
+        letter-spacing: -6px;
+        line-height: 256px;
+      }
+    </style>
+  </defs>
+
+  <text x="60" y="555" class="studio-text">Ophelia's</text>
+  <text x="781" y="805" class="studio-text">Tear</text>
+</svg>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ophelia's Tears - Tattoo & Art Studio</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <p class="header-left">Ophelia's Tears</p>
+      <p class="header-center">12 Park St, 8A, Brooklyn, NY</p>
+      <p class="header-right">Booking form</p>
+    </div>
+
+    <div class="studio-name" id="studio-name-container">
+      <img class="studio-name-img" src="studio-name-art.png" alt="Ophelia's Tear">
+    </div>
+
+    <div class="hero-image">
+      <img src="https://www.figma.com/api/mcp/asset/9c0e76f1-70f6-4d6b-8cfd-f157aec9a733" alt="Ophelia's Tears artwork">
+    </div>
+
+<div class="info">
+      <p class="info-main">Tattoo & Art Studio by Ari Levinsohn.</p>
+      <p class="info-sub">By Appointment Only.</p>
+    </div>
+
+    <div class="bottom-links">
+      <p class="link">Browse Flash</p>
+      <p class="link">Booking Info</p>
+      <p class="link">Biography</p>
+      <p class="link">Aftercare</p>
+    </div>
+  </div>
+
+  <!-- Design grid overlay -->
+  <svg class="grid-overlay" viewBox="0 0 1440 976" preserveAspectRatio="none">
+    <defs>
+      <style>
+        .grid-column { fill: rgba(100, 150, 200, 0.08); }
+        .grid-line { stroke: rgba(100, 150, 200, 0.3); stroke-width: 1; }
+        .grid-label { font-family: 'Courier New', monospace; font-size: 10px; fill: rgba(100, 150, 200, 0.5); }
+      </style>
+    </defs>
+
+    <!-- Column backgrounds -->
+    <g class="grid-columns">
+      <rect class="grid-column" x="60" y="0" width="153.33" height="976" />
+      <rect class="grid-column" x="293.33" y="0" width="153.33" height="976" />
+      <rect class="grid-column" x="526.67" y="0" width="153.33" height="976" />
+      <rect class="grid-column" x="760" y="0" width="153.33" height="976" />
+      <rect class="grid-column" x="993.33" y="0" width="153.33" height="976" />
+      <rect class="grid-column" x="1226.67" y="0" width="153.33" height="976" />
+    </g>
+
+    <!-- Vertical grid lines -->
+    <g class="grid-lines">
+      <line class="grid-line" x1="60" y1="0" x2="60" y2="976" />
+      <line class="grid-line" x1="213.33" y1="0" x2="213.33" y2="976" />
+      <line class="grid-line" x1="293.33" y1="0" x2="293.33" y2="976" />
+      <line class="grid-line" x1="446.67" y1="0" x2="446.67" y2="976" />
+      <line class="grid-line" x1="526.67" y1="0" x2="526.67" y2="976" />
+      <line class="grid-line" x1="680" y1="0" x2="680" y2="976" />
+      <line class="grid-line" x1="760" y1="0" x2="760" y2="976" />
+      <line class="grid-line" x1="913.33" y1="0" x2="913.33" y2="976" />
+      <line class="grid-line" x1="993.33" y1="0" x2="993.33" y2="976" />
+      <line class="grid-line" x1="1146.67" y1="0" x2="1146.67" y2="976" />
+      <line class="grid-line" x1="1226.67" y1="0" x2="1226.67" y2="976" />
+      <line class="grid-line" x1="1380" y1="0" x2="1380" y2="976" />
+    </g>
+
+    <!-- Column labels -->
+    <g class="grid-labels">
+      <text class="grid-label" x="66" y="15">Col 1</text>
+      <text class="grid-label" x="299.33" y="15">Col 2</text>
+      <text class="grid-label" x="532.67" y="15">Col 3</text>
+      <text class="grid-label" x="766" y="15">Col 4</text>
+      <text class="grid-label" x="999.33" y="15">Col 5</text>
+      <text class="grid-label" x="1232.67" y="15">Col 6</text>
+    </g>
+  </svg>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ripple Effect Techniques Demo</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #ffd7c8;
+      font-family: sans-serif;
+      overflow: hidden;
+    }
+    #canvas-container {
+      width: 100vw;
+      height: 100vh;
+    }
+    #info {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      max-width: 300px;
+      z-index: 100;
+    }
+    #info h3 {
+      margin: 0 0 10px 0;
+      color: #333;
+    }
+    #info p {
+      margin: 5px 0;
+      color: #666;
+    }
+    #technique {
+      font-weight: bold;
+      color: #ac5353;
+      font-size: 16px;
+    }
+    .button-group {
+      display: flex;
+      gap: 8px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+    button {
+      padding: 8px 12px;
+      background: #ffd7c8;
+      border: 2px solid #ac5353;
+      color: #ac5353;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    button:hover {
+      background: #ac5353;
+      color: #ffd7c8;
+    }
+    button.active {
+      background: #ac5353;
+      color: #ffd7c8;
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+  <div id="info">
+    <h3>Ripple Techniques Demo</h3>
+    <p><strong>Current:</strong> <span id="technique">Circular Ripples (Current)</span></p>
+    <p id="description"></p>
+    <div class="button-group">
+      <button class="tech-button active" data-index="0">1. Circular</button>
+      <button class="tech-button" data-index="1">2. Gerstner</button>
+      <button class="tech-button" data-index="2">3. Perlin</button>
+      <button class="tech-button" data-index="3">4. Multi-octave</button>
+      <button class="tech-button" data-index="4">5. Parallax</button>
+      <button class="tech-button" data-index="5">6. Vertex Disp.</button>
+      <button class="tech-button" data-index="6">7. GPU Water</button>
+    </div>
+  </div>
+
+  <script>
+    let scene, camera, renderer, rippleMaterial, container, planeMesh;
+    let mouseX = 0, mouseY = 0;
+    let imageLoaded = false;
+    let imageAspectRatio = 1;
+    let currentTechnique = 0;
+    let currentTexture = null;
+
+    const techniques = [
+      {
+        name: 'Circular Ripples (Current)',
+        description: 'Multiple sine wave layers with exponential decay. Clean, predictable ripples.'
+      },
+      {
+        name: 'Gerstner Waves',
+        description: 'Directional waves that follow cursor movement. More realistic ocean-like waves.'
+      },
+      {
+        name: 'Perlin Noise',
+        description: 'Organic, turbulent ripples using noise functions. Chaotic and natural-looking.'
+      },
+      {
+        name: 'Multi-octave Noise',
+        description: 'Multiple noise layers at different scales. Rich, complex water surface.'
+      },
+      {
+        name: 'Parallax Mapping',
+        description: 'Depth-based distortion that creates layered 3D effect. Most convincing water surface.'
+      },
+      {
+        name: 'Vertex Displacement',
+        description: 'True 3D mesh deformation. Vertices move based on wave height for realistic geometry.'
+      },
+      {
+        name: 'GPU Water Simulation',
+        description: 'Physics-based water with refraction and 3D depth. Most realistic wave behavior and light interaction.'
+      }
+    ];
+
+    const vertexShader = `
+      varying vec2 vUv;
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `;
+
+    const vertexShaderWaterSim = `
+      uniform vec2 cursorPos;
+      uniform float time;
+
+      varying vec2 vUv;
+      varying vec3 vNormal;
+      varying vec3 vPosition;
+      varying float vHeight;
+
+      float ripple(vec2 uv, vec2 center, float t) {
+        float dist = length(uv - center);
+        float wave = sin(dist * 20.0 - t * 3.0) * exp(-dist * 5.0);
+        return wave;
+      }
+
+      void main() {
+        vUv = uv;
+
+        // Compute height at this vertex
+        vec2 centerUv = cursorPos;
+        float height = 0.0;
+        height += ripple(uv, centerUv, time) * 0.20;
+        height += ripple(uv, centerUv, time - 1.0) * 0.08;
+        height += ripple(uv, centerUv, time - 2.0) * 0.04;
+
+        float dist = length(uv - centerUv);
+        float smallRipple = sin(dist * 60.0 - time * 5.0) * exp(-dist * 8.0);
+        height += smallRipple * 0.03;
+
+        vHeight = height;
+
+        // Compute surface normal via finite differences
+        float eps = 0.008;
+        float hL = ripple(uv - vec2(eps, 0.0), centerUv, time) * 0.20;
+        hL += ripple(uv - vec2(eps, 0.0), centerUv, time - 1.0) * 0.08;
+        hL += ripple(uv - vec2(eps, 0.0), centerUv, time - 2.0) * 0.04;
+
+        float hR = ripple(uv + vec2(eps, 0.0), centerUv, time) * 0.20;
+        hR += ripple(uv + vec2(eps, 0.0), centerUv, time - 1.0) * 0.08;
+        hR += ripple(uv + vec2(eps, 0.0), centerUv, time - 2.0) * 0.04;
+
+        float hU = ripple(uv - vec2(0.0, eps), centerUv, time) * 0.20;
+        hU += ripple(uv - vec2(0.0, eps), centerUv, time - 1.0) * 0.08;
+        hU += ripple(uv - vec2(0.0, eps), centerUv, time - 2.0) * 0.04;
+
+        float hD = ripple(uv + vec2(0.0, eps), centerUv, time) * 0.20;
+        hD += ripple(uv + vec2(0.0, eps), centerUv, time - 1.0) * 0.08;
+        hD += ripple(uv + vec2(0.0, eps), centerUv, time - 2.0) * 0.04;
+
+        // Compute normal from gradient
+        vec3 tangent = normalize(vec3(eps * 2.0, hR - hL, 0.0));
+        vec3 bitangent = normalize(vec3(0.0, hD - hU, eps * 2.0));
+        vNormal = normalize(cross(bitangent, tangent));
+
+        // Displace vertex
+        vec3 displacedPosition = position + normal * height * 0.35;
+        vPosition = displacedPosition;
+
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(displacedPosition, 1.0);
+      }
+    `;
+
+    const vertexShaderDisplacement = `
+      uniform vec2 cursorPos;
+      uniform float time;
+
+      varying vec2 vUv;
+      varying vec3 vNormal;
+      varying vec3 vPosition;
+
+      float ripple(vec2 uv, vec2 center, float t) {
+        float dist = length(uv - center);
+        float wave = sin(dist * 20.0 - t * 3.0) * exp(-dist * 5.0);
+        return wave;
+      }
+
+      void main() {
+        vUv = uv;
+
+        // Compute ripple height at this vertex
+        vec2 centerUv = cursorPos;
+        float height = 0.0;
+        height += ripple(uv, centerUv, time) * 0.20;
+        height += ripple(uv, centerUv, time - 1.0) * 0.08;
+        height += ripple(uv, centerUv, time - 2.0) * 0.04;
+
+        float dist = length(uv - centerUv);
+        float smallRipple = sin(dist * 60.0 - time * 5.0) * exp(-dist * 8.0);
+        height += smallRipple * 0.03;
+
+        // Displace vertex along normal
+        vec3 displacedPosition = position + normal * height * 0.3;
+
+        // Compute normal with finite differences for proper lighting
+        float eps = 0.01;
+        float hL = ripple(uv - vec2(eps, 0.0), centerUv, time) * 0.20;
+        float hR = ripple(uv + vec2(eps, 0.0), centerUv, time) * 0.20;
+        float hU = ripple(uv - vec2(0.0, eps), centerUv, time) * 0.20;
+        float hD = ripple(uv + vec2(0.0, eps), centerUv, time) * 0.20;
+
+        vec3 tangent = normalize(vec3(eps * 2.0, hR - hL, 0.0));
+        vec3 bitangent = normalize(vec3(0.0, hD - hU, eps * 2.0));
+        vNormal = normalize(cross(bitangent, tangent));
+
+        vPosition = displacedPosition;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(displacedPosition, 1.0);
+      }
+    `;
+
+    // Fragment shader variants
+    const fragmentShaders = {
+      circular: `
+        uniform sampler2D tTexture;
+        uniform vec2 cursorPos;
+        uniform float time;
+
+        varying vec2 vUv;
+
+        float ripple(vec2 uv, vec2 center, float t) {
+          float dist = length(uv - center);
+          float wave = sin(dist * 20.0 - t * 3.0) * exp(-dist * 5.0);
+          return wave;
+        }
+
+        void main() {
+          vec2 uv = vUv;
+          vec2 centerUv = cursorPos;
+
+          float distortion = 0.0;
+          distortion += ripple(uv, centerUv, time) * 0.20;
+          distortion += ripple(uv, centerUv, time - 1.0) * 0.08;
+          distortion += ripple(uv, centerUv, time - 2.0) * 0.04;
+
+          vec2 dist = uv - centerUv;
+          float d = length(dist);
+          float smallRipple = sin(d * 60.0 - time * 5.0) * exp(-d * 8.0);
+          distortion += smallRipple * 0.03;
+
+          vec2 distortedUv = uv + distortion * normalize(dist) * 0.08;
+          distortedUv = clamp(distortedUv, 0.0, 1.0);
+
+          vec4 texColor = texture(tTexture, distortedUv);
+          float shade = 1.0 - abs(distortion) * 0.05;
+          texColor.rgb *= shade;
+
+          gl_FragColor = texColor;
+        }
+      `,
+
+      gerstner: `
+        uniform sampler2D tTexture;
+        uniform vec2 cursorPos;
+        uniform float time;
+
+        varying vec2 vUv;
+
+        float gerstnerWave(vec4 wave, vec2 p, float t) {
+          float steepness = wave.z;
+          float wavelength = wave.w;
+          float k = 2.0 * 3.14159 / wavelength;
+          float c = sqrt(9.8 / k);
+          vec2 d = normalize(wave.xy);
+          float f = k * (dot(d, p) - c * t);
+          float a = steepness / k;
+          return a * sin(f);
+        }
+
+        void main() {
+          vec2 uv = vUv;
+          vec2 p = (uv - cursorPos) * 15.0;
+
+          float height = 0.0;
+          height += gerstnerWave(vec4(1.0, 0.0, 0.25, 60.0), p, time);
+          height += gerstnerWave(vec4(0.6, 0.8, 0.15, 31.0), p, time);
+          height += gerstnerWave(vec4(-0.7, 0.7, 0.1, 18.0), p, time);
+
+          float falloff = exp(-length(uv - cursorPos) * 3.0);
+          height *= falloff;
+
+          vec2 distortedUv = uv + height * 0.1 * normalize(uv - cursorPos);
+          distortedUv = clamp(distortedUv, 0.0, 1.0);
+
+          vec4 texColor = texture(tTexture, distortedUv);
+          float shade = 1.0 - abs(height) * 0.06;
+          texColor.rgb *= shade;
+
+          gl_FragColor = texColor;
+        }
+      `,
+
+      perlin: `
+        uniform sampler2D tTexture;
+        uniform vec2 cursorPos;
+        uniform float time;
+
+        varying vec2 vUv;
+
+        float hash(vec2 p) {
+          return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+        }
+
+        float noise(vec2 p) {
+          vec2 i = floor(p);
+          vec2 f = fract(p);
+          f = f * f * (3.0 - 2.0 * f);
+
+          float a = hash(i);
+          float b = hash(i + vec2(1.0, 0.0));
+          float c = hash(i + vec2(0.0, 1.0));
+          float d = hash(i + vec2(1.0, 1.0));
+
+          return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+        }
+
+        void main() {
+          vec2 uv = vUv;
+          float dist = length(uv - cursorPos);
+          float falloff = exp(-dist * 2.5);
+
+          float n = noise((uv * 8.0) + time * 0.5);
+          n += 0.5 * noise((uv * 16.0) - time * 0.7);
+          n = n * 2.0 - 1.0;
+
+          vec2 distortedUv = uv + n * 0.06 * falloff * normalize(uv - cursorPos);
+          distortedUv = clamp(distortedUv, 0.0, 1.0);
+
+          vec4 texColor = texture(tTexture, distortedUv);
+          float shade = 1.0 - abs(n) * 0.04 * falloff;
+          texColor.rgb *= shade;
+
+          gl_FragColor = texColor;
+        }
+      `,
+
+      waterSim: `
+        uniform sampler2D tTexture;
+        uniform vec2 cursorPos;
+
+        varying vec2 vUv;
+        varying vec3 vNormal;
+        varying vec3 vPosition;
+        varying float vHeight;
+
+        void main() {
+          // Subtle normal-based refraction
+          vec2 refractOffset = vNormal.xy * 0.06;
+          vec2 refractedUv = vUv + refractOffset;
+          refractedUv = clamp(refractedUv, 0.0, 1.0);
+
+          // Sample base texture with refracted coordinates
+          vec4 texColor = texture(tTexture, refractedUv);
+
+          // Subtle Fresnel effect
+          vec3 viewDir = normalize(-vPosition);
+          float fresnel = pow(1.0 - abs(dot(vNormal, viewDir)), 3.0) * 0.3;
+
+          // Gentle lighting
+          vec3 lightDir = normalize(vec3(1.0, 1.0, 0.5));
+          float diffuse = max(dot(vNormal, lightDir), 0.0) * 0.15 + 0.95;
+
+          // Subtle specular highlight
+          vec3 halfDir = normalize(lightDir + viewDir);
+          float specular = pow(max(dot(vNormal, halfDir), 0.0), 64.0) * 0.2;
+
+          // Distance-based fade from cursor
+          float dist = length(vUv - cursorPos);
+          float fade = exp(-dist * 2.0);
+
+          // Combine effects subtly
+          texColor.rgb *= diffuse;
+          texColor.rgb += vec3(specular * fade * 0.3 + fresnel * fade * 0.1);
+
+          gl_FragColor = texColor;
+        }
+      `,
+
+      displacement: `
+        uniform sampler2D tTexture;
+        uniform vec2 cursorPos;
+
+        varying vec2 vUv;
+        varying vec3 vNormal;
+        varying vec3 vPosition;
+
+        void main() {
+          vec4 texColor = texture(tTexture, vUv);
+
+          // Compute lighting based on displaced normals
+          vec3 lightDir = normalize(vec3(1.0, 1.0, 0.5));
+          float diffuse = max(dot(vNormal, lightDir), 0.0) * 0.3 + 0.7;
+
+          // Add specular highlight for water-like appearance
+          vec3 viewDir = normalize(-vPosition);
+          vec3 halfDir = normalize(lightDir + viewDir);
+          float specular = pow(max(dot(vNormal, halfDir), 0.0), 32.0) * 0.5;
+
+          // Distance-based dimming from cursor
+          float dist = length(vUv - cursorPos);
+          float fade = exp(-dist * 2.0);
+
+          texColor.rgb *= diffuse;
+          texColor.rgb += vec3(specular * fade);
+
+          gl_FragColor = texColor;
+        }
+      `,
+
+      parallax: `
+        uniform sampler2D tTexture;
+        uniform vec2 cursorPos;
+        uniform float time;
+
+        varying vec2 vUv;
+
+        float hash(vec2 p) {
+          return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+        }
+
+        float noise(vec2 p) {
+          vec2 i = floor(p);
+          vec2 f = fract(p);
+          f = f * f * (3.0 - 2.0 * f);
+
+          float a = hash(i);
+          float b = hash(i + vec2(1.0, 0.0));
+          float c = hash(i + vec2(0.0, 1.0));
+          float d = hash(i + vec2(1.0, 1.0));
+
+          return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+        }
+
+        void main() {
+          vec2 uv = vUv;
+          vec2 centerUv = cursorPos;
+          vec2 toCenter = centerUv - uv;
+
+          float dist = length(toCenter);
+          float falloff = exp(-dist * 2.5);
+
+          // Compute height at multiple layers for parallax effect
+          float h0 = noise((uv * 8.0) + time * 0.5) * falloff;
+          float h1 = noise((uv * 6.0) - time * 0.3) * falloff * 0.6;
+          float h2 = noise((uv * 4.0) + time * 0.2) * falloff * 0.3;
+
+          float totalHeight = (h0 + h1 + h2) / 3.0 - 0.5;
+
+          // Parallax mapping: offset based on height and direction to camera
+          vec2 parallaxDir = normalize(toCenter) * 0.15;
+          vec2 parallaxedUv = uv + parallaxDir * totalHeight;
+          parallaxedUv = clamp(parallaxedUv, 0.0, 1.0);
+
+          // Layer 1: Base texture with parallax offset
+          vec4 texColor = texture(tTexture, parallaxedUv);
+
+          // Layer 2: Subtle second offset for depth
+          vec2 parallaxedUv2 = uv + parallaxDir * totalHeight * 0.5;
+          parallaxedUv2 = clamp(parallaxedUv2, 0.0, 1.0);
+          vec4 texColor2 = texture(tTexture, parallaxedUv2);
+
+          // Blend layers for depth illusion
+          texColor = mix(texColor, texColor2, 0.3);
+
+          // Shading based on height for 3D effect
+          float shade = 1.0 + totalHeight * 0.15;
+          shade *= (0.8 + falloff * 0.2);
+
+          texColor.rgb *= shade;
+          gl_FragColor = texColor;
+        }
+      `,
+
+      multioctave: `
+        uniform sampler2D tTexture;
+        uniform vec2 cursorPos;
+        uniform float time;
+
+        varying vec2 vUv;
+
+        float hash(vec2 p) {
+          return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+        }
+
+        float noise(vec2 p) {
+          vec2 i = floor(p);
+          vec2 f = fract(p);
+          f = f * f * (3.0 - 2.0 * f);
+
+          float a = hash(i);
+          float b = hash(i + vec2(1.0, 0.0));
+          float c = hash(i + vec2(0.0, 1.0));
+          float d = hash(i + vec2(1.0, 1.0));
+
+          return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+        }
+
+        float fbm(vec2 p, float t) {
+          float value = 0.0;
+          float amplitude = 0.5;
+          float frequency = 1.0;
+
+          for(int i = 0; i < 4; i++) {
+            value += amplitude * noise(p * frequency + t);
+            amplitude *= 0.5;
+            frequency *= 2.0;
+          }
+
+          return value;
+        }
+
+        void main() {
+          vec2 uv = vUv;
+          float dist = length(uv - cursorPos);
+          float falloff = exp(-dist * 2.0);
+
+          float n1 = fbm((uv * 6.0) + time * 0.3, time);
+          float n2 = fbm((uv * 12.0) - time * 0.5, time * 1.5);
+          float combined = (n1 + n2) - 1.0;
+
+          vec2 distortedUv = uv + combined * 0.08 * falloff * normalize(uv - cursorPos);
+          distortedUv = clamp(distortedUv, 0.0, 1.0);
+
+          vec4 texColor = texture(tTexture, distortedUv);
+          float shade = 1.0 - abs(combined) * 0.05 * falloff;
+          texColor.rgb *= shade;
+
+          gl_FragColor = texColor;
+        }
+      `
+    };
+
+    function createPlaneWithAspectRatio(containerWidth, containerHeight, aspectRatio, material, isHighRes = false) {
+      const containerAspect = containerWidth / containerHeight;
+      let planeWidth, planeHeight;
+
+      if (containerAspect > aspectRatio) {
+        planeHeight = containerHeight;
+        planeWidth = planeHeight * aspectRatio;
+      } else {
+        planeWidth = containerWidth;
+        planeHeight = planeWidth / aspectRatio;
+      }
+
+      // Use higher resolution for vertex displacement
+      const segments = isHighRes ? 128 : 1;
+      const geometry = new THREE.PlaneGeometry(planeWidth, planeHeight, segments, segments);
+      return new THREE.Mesh(geometry, material);
+    }
+
+    function initDemo() {
+      const studioImg = document.querySelector('img') || document.createElement('img');
+      studioImg.src = 'studio-name-art.png';
+      container = document.getElementById('canvas-container');
+
+      studioImg.onload = () => {
+        imageAspectRatio = studioImg.naturalWidth / studioImg.naturalHeight;
+
+        scene = new THREE.Scene();
+        scene.background = null;
+
+        const rect = container.getBoundingClientRect();
+        const width = rect.width;
+        const height = rect.height;
+
+        camera = new THREE.OrthographicCamera(width / -2, width / 2, height / 2, height / -2, 0.1, 1000);
+        camera.position.z = 1;
+
+        renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.domElement.id = 'studio-name-canvas';
+        container.appendChild(renderer.domElement);
+
+        const textureLoader = new THREE.TextureLoader();
+        textureLoader.load(studioImg.src, (texture) => {
+          currentTexture = texture;
+          createAndRenderTechnique(0, texture);
+          imageLoaded = true;
+
+          // Add button click handlers after texture loads
+          document.querySelectorAll('.tech-button').forEach((btn) => {
+            btn.addEventListener('click', () => {
+              const index = parseInt(btn.dataset.index);
+              if (currentTexture) {
+                switchTechnique(index, currentTexture);
+              }
+            });
+          });
+
+          animate();
+        });
+
+        document.addEventListener('mousemove', (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+          const rect = container.getBoundingClientRect();
+          const normalizedX = (mouseX - rect.left) / rect.width;
+          const normalizedY = 1.0 - (mouseY - rect.top) / rect.height;
+          rippleMaterial.uniforms.cursorPos.value.set(normalizedX, normalizedY);
+        });
+
+        window.addEventListener('resize', () => {
+          const rect = container.getBoundingClientRect();
+          const width = rect.width;
+          const height = rect.height;
+
+          renderer.setSize(width, height);
+          camera.left = width / -2;
+          camera.right = width / 2;
+          camera.top = height / 2;
+          camera.bottom = height / -2;
+          camera.updateProjectionMatrix();
+
+          if (planeMesh) {
+            planeMesh.geometry.dispose();
+            const isHighRes = currentTechnique === 5 || currentTechnique === 6;
+            planeMesh.geometry = createPlaneWithAspectRatio(width, height, imageAspectRatio, rippleMaterial, isHighRes).geometry;
+          }
+        });
+
+      };
+    }
+
+    function createAndRenderTechnique(index, texture) {
+      currentTechnique = index;
+      const shaderMap = ['circular', 'gerstner', 'perlin', 'multioctave', 'parallax', 'displacement', 'waterSim'];
+      const shader = fragmentShaders[shaderMap[index]];
+      const isDisplacement = index === 5;
+      const isWaterSim = index === 6;
+      let vShader;
+      if (isWaterSim) {
+        vShader = vertexShaderWaterSim;
+      } else if (isDisplacement) {
+        vShader = vertexShaderDisplacement;
+      } else {
+        vShader = vertexShader;
+      }
+
+      rippleMaterial = new THREE.ShaderMaterial({
+        uniforms: {
+          tTexture: { value: texture },
+          cursorPos: { value: new THREE.Vector2(0.5, 0.5) },
+          time: { value: 0 }
+        },
+        vertexShader: vShader,
+        fragmentShader: shader,
+        transparent: true
+      });
+
+      if (planeMesh) {
+        scene.remove(planeMesh);
+        planeMesh.geometry.dispose();
+      }
+
+      const rect = container.getBoundingClientRect();
+      planeMesh = createPlaneWithAspectRatio(rect.width, rect.height, imageAspectRatio, rippleMaterial, isDisplacement || isWaterSim);
+      scene.add(planeMesh);
+
+      updateInfo();
+    }
+
+    function switchTechnique(index, texture) {
+      createAndRenderTechnique(index, texture);
+    }
+
+    function updateInfo() {
+      document.getElementById('technique').textContent = techniques[currentTechnique].name;
+      document.getElementById('description').textContent = techniques[currentTechnique].description;
+
+      // Update button states
+      document.querySelectorAll('.tech-button').forEach((btn, idx) => {
+        if (idx === currentTechnique) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+
+    function animate() {
+      if (!imageLoaded || !rippleMaterial) {
+        requestAnimationFrame(animate);
+        return;
+      }
+
+      rippleMaterial.uniforms.time.value += 0.016;
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+
+    initDemo();
+  </script>
+</body>
+</html>
