@@ -29,7 +29,7 @@ body {
   align-items: center;
   font-size: 14px;
   font-weight: 500;
-  color: #7fa9be;
+  color: #111111;
   white-space: nowrap;
   z-index: 3;
 }
@@ -111,7 +111,7 @@ body {
 .info-main {
   font-size: 16px;
   font-weight: 500;
-  color: #7fa9be;
+  color: #111111;
   line-height: 24px;
   margin-bottom: 8px;
 }
@@ -133,7 +133,7 @@ body {
   justify-content: space-between;
   font-size: 14px;
   font-weight: 500;
-  color: #7fa9be;
+  color: #111111;
   text-align: center;
   z-index: 3;
 }
