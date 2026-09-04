@@ -7,6 +7,8 @@ let currentTexture = null;
 let lastInteractionTime = 0;
 let interactionTimeout = 3000; // 3 seconds before ripples settle
 let rippleIntensity = 0; // 0 = still, 1 = full interaction
+let isMobileViewport = false; // Auto-ripple on mobile
+let autoRippleInterval = null; // Mobile auto-ripple interval
 
 // Vertex shader - simple pass-through
 const vertexShader = `
@@ -177,6 +179,9 @@ function initRipple() {
       const displayRect = renderer.domElement.getBoundingClientRect();
       console.log('Ripple initialized. Display:', displayRect.width.toFixed(0), 'x', displayRect.height.toFixed(0), 'px');
 
+      // Start auto-ripple if on mobile viewport
+      updateMobileRippleState();
+
       animate();
     },
     undefined,
@@ -192,6 +197,46 @@ function initRipple() {
 function measureLayout() {
   const rect = container.getBoundingClientRect();
   // Additional layout calculations can go here if needed
+}
+
+// ---- Mobile viewport detection and auto-ripple ----
+function isMobileSize() {
+  return window.innerWidth >= 320 && window.innerWidth <= 768;
+}
+
+function startAutoRipple() {
+  if (autoRippleInterval) clearInterval(autoRippleInterval);
+
+  autoRippleInterval = setInterval(() => {
+    if (!rippleMaterial || !container) return;
+
+    // Generate ripple at random point within container (with slight bias toward center)
+    const randX = 0.3 + Math.random() * 0.4; // 0.3 to 0.7 range (center-biased)
+    const randY = 0.3 + Math.random() * 0.4; // 0.3 to 0.7 range (center-biased)
+
+    rippleMaterial.uniforms.cursorPos.value.set(randX, randY);
+    lastInteractionTime = Date.now();
+    rippleIntensity = 0.7; // Slightly lower intensity for ambient effect
+    rippleMaterial.uniforms.rippleIntensity.value = rippleIntensity;
+  }, 1500); // Auto-ripple every 1.5 seconds on mobile
+}
+
+function stopAutoRipple() {
+  if (autoRippleInterval) {
+    clearInterval(autoRippleInterval);
+    autoRippleInterval = null;
+  }
+}
+
+function updateMobileRippleState() {
+  const wasMobile = isMobileViewport;
+  isMobileViewport = isMobileSize();
+
+  if (isMobileViewport && !wasMobile && imageLoaded) {
+    startAutoRipple();
+  } else if (!isMobileViewport && wasMobile) {
+    stopAutoRipple();
+  }
 }
 
 // ---- Easing function for smooth settling ----
@@ -265,6 +310,9 @@ window.addEventListener('resize', () => {
   if (rippleMaterial) {
     rippleMaterial.uniforms.resolution.value.set(width, height);
   }
+
+  // Check if mobile viewport changed
+  updateMobileRippleState();
 });
 
 // Load sequence
