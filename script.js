@@ -333,3 +333,32 @@ document.addEventListener('keydown', (e) => {
     gridOverlay.classList.toggle('grid-visible');
   }
 });
+
+// ---- Mobile menu toggle ----
+const menuToggle = document.getElementById('menuToggle');
+const menuClose = document.getElementById('menuClose');
+const mobileMenu = document.getElementById('mobileMenu');
+
+if (menuToggle && mobileMenu) {
+  menuToggle.addEventListener('click', () => {
+    menuToggle.classList.add('active');
+    mobileMenu.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  });
+
+  menuClose.addEventListener('click', () => {
+    menuToggle.classList.remove('active');
+    mobileMenu.classList.remove('active');
+    document.body.style.overflow = 'auto';
+  });
+
+  // Close menu when clicking on a link
+  const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+  mobileMenuLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      menuToggle.classList.remove('active');
+      mobileMenu.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    });
+  });
+}

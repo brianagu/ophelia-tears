@@ -225,3 +225,172 @@ body {
   }
 }
 
+/* Mobile Menu Button */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 4;
+}
+
+.menu-toggle span {
+  width: 24px;
+  height: 2px;
+  background-color: #000000;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+.menu-toggle.active span:nth-child(1) {
+  transform: rotate(45deg) translate(8px, 8px);
+}
+
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Mobile Menu Overlay */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  z-index: 3;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.mobile-menu.active {
+  display: flex;
+}
+
+.mobile-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 31px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.mobile-menu-header img {
+  height: 32px;
+  width: auto;
+}
+
+.mobile-menu-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 40px 27px;
+  flex: 1;
+}
+
+.mobile-menu-content a,
+.mobile-menu-content p {
+  font-family: 'Minion Pro', 'Garamond', serif;
+  font-size: 24px;
+  font-weight: normal;
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.mobile-menu-content img {
+  width: 7.616px;
+  height: 7.626px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 727px) {
+  /* Hide desktop navigation */
+  .header-nav {
+    display: none;
+  }
+
+  /* Show mobile menu toggle */
+  .menu-toggle {
+    display: flex;
+  }
+
+  /* Adjust header layout for mobile */
+  .header {
+    top: 24px;
+    left: 31px;
+    width: calc(100% - 62px);
+  }
+
+  .header-left {
+    width: 240.941px;
+    height: 32px;
+  }
+
+  .header-right {
+    display: none;
+  }
+
+  /* Adjust hero section for mobile */
+  .hero-image {
+    width: clamp(300px, 80vw, 372px);
+    height: clamp(300px, 80vw, 372px);
+    top: calc(50% - 40px);
+  }
+
+  /* Adjust studio name for mobile */
+  .studio-name {
+    height: clamp(300px, 80vw, 600px);
+  }
+
+  /* Adjust footer for mobile */
+  .footer {
+    bottom: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 62px);
+    max-width: 314px;
+  }
+
+  .footer-address {
+    font-size: 10px;
+    gap: 8px;
+  }
+
+  .footer-icon {
+    width: 25.645px;
+    height: 15.806px;
+  }
+
+  .footer-copyright {
+    font-size: 10px;
+  }
+
+  /* Mobile booking button at bottom */
+  .mobile-booking-button {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 62px);
+    max-width: 314px;
+    z-index: 2;
+  }
+
+  .mobile-booking-button .header-right {
+    display: flex;
+    width: 100%;
+  }
+}
+
