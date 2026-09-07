@@ -42,16 +42,45 @@ body {
   object-position: left center;
 }
 
-.header-center {
+.header-nav {
   flex: 1;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  align-items: center;
+}
+
+.nav-link {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111111;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  opacity: 0.7;
 }
 
 .header-right {
-  flex: 1;
-  text-align: right;
-  text-decoration: underline;
+  flex: 0 0 auto;
+  padding: 8px 16px;
+  border: 2px solid #111111;
+  border-radius: 2px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111111;
+  text-decoration: none;
   cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.header-right:hover {
+  background-color: #111111;
+  color: #d5f1ff;
 }
 
 /* Hero Image */
@@ -104,54 +133,31 @@ body {
   opacity: 0.5 !important;
 }
 
-/* Info Section */
-.info {
-  position: fixed;
-  bottom: 174px;
-  left: 60px;
-  max-width: 386px;
-  z-index: 3;
-}
-
-.info-main {
-  font-size: 16px;
-  font-weight: 500;
-  color: #111111;
-  line-height: 24px;
-  margin-bottom: 8px;
-}
-
-.info-sub {
-  font-size: 14px;
-  font-weight: normal;
-  color: rgba(0, 0, 0, 0.5);
-  line-height: 1.5;
-}
-
-/* Bottom Links */
-.bottom-links {
+/* Footer */
+.footer {
   position: absolute;
   bottom: 24px;
   left: 60px;
   width: calc(100% - 120px);
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-  font-weight: 500;
-  color: #111111;
   text-align: center;
   z-index: 3;
 }
 
-.link {
-  flex: 1;
-  text-decoration: underline;
-  cursor: pointer;
-  transition: opacity 0.3s ease;
+.footer-address {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111111;
+  line-height: 1.5;
+  margin-bottom: 8px;
+  letter-spacing: 0.05em;
 }
 
-.link:hover {
-  opacity: 0.7;
+.footer-copyright {
+  font-size: 12px;
+  font-weight: normal;
+  color: rgba(0, 0, 0, 0.5);
+  line-height: 1.5;
+  letter-spacing: 0.05em;
 }
 
 /* Design Grid Overlay */
