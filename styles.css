@@ -46,14 +46,15 @@ body {
   flex: 1;
   display: flex;
   justify-content: center;
-  gap: 40px;
+  gap: 64px;
   align-items: center;
 }
 
 .nav-link {
-  font-size: 14px;
-  font-weight: 500;
-  color: #111111;
+  font-family: 'Minion Pro', 'Garamond', serif;
+  font-size: 16px;
+  font-weight: normal;
+  color: #000000;
   text-decoration: none;
   cursor: pointer;
   transition: opacity 0.3s ease;
@@ -66,12 +67,14 @@ body {
 
 .header-right {
   flex: 0 0 auto;
-  padding: 8px 16px;
-  border: 2px solid #111111;
+  padding: 12px 16px;
+  border: 2px solid white;
   border-radius: 2px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #111111;
+  font-family: 'Minion Pro', 'Garamond', serif;
+  font-size: 16px;
+  font-weight: normal;
+  background-color: #224b60;
+  color: white;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -79,8 +82,7 @@ body {
 }
 
 .header-right:hover {
-  background-color: #111111;
-  color: #d5f1ff;
+  opacity: 0.9;
 }
 
 /* Hero Image */
@@ -139,25 +141,31 @@ body {
   bottom: 24px;
   left: 60px;
   width: calc(100% - 120px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   text-align: center;
   z-index: 3;
 }
 
 .footer-address {
-  font-size: 14px;
-  font-weight: 500;
-  color: #111111;
-  line-height: 1.5;
-  margin-bottom: 8px;
-  letter-spacing: 0.05em;
+  font-family: 'Minion Pro', 'Garamond', serif;
+  font-size: 12px;
+  font-weight: normal;
+  color: #000000;
+  line-height: 1;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
 }
 
 .footer-copyright {
+  font-family: 'Minion Pro', 'Garamond', serif;
   font-size: 12px;
   font-weight: normal;
-  color: rgba(0, 0, 0, 0.5);
-  line-height: 1.5;
-  letter-spacing: 0.05em;
+  color: #000000;
+  line-height: 1;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
 }
 
 /* Design Grid Overlay */
