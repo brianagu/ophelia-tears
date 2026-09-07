@@ -207,8 +207,6 @@ body {
 .grid-overlay {
   position: fixed;
   inset: 0;
-  width: 100vw;
-  height: 100vh;
   z-index: 999;
   display: none;
   pointer-events: none;
@@ -218,9 +216,53 @@ body {
   display: block;
 }
 
-/* Hide grid on viewports smaller than 1440px */
-@media (max-width: 1439px) {
-  .grid-overlay {
+/* Desktop grid */
+.desktop-grid {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Mobile grid */
+.mobile-grid {
+  width: 375px;
+  height: 812px;
+  left: 0;
+  top: 0;
+}
+
+/* Show/hide grid based on viewport */
+@media (max-width: 727px) {
+  .desktop-grid {
+    display: none !important;
+  }
+
+  .mobile-grid {
+    display: none;
+  }
+
+  .mobile-grid.grid-visible {
+    display: block !important;
+  }
+}
+
+@media (min-width: 728px) {
+  .mobile-grid {
+    display: none !important;
+  }
+
+  .desktop-grid {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .desktop-grid.grid-visible {
+    display: block;
+  }
+}
+
+/* Hide desktop grid on viewports smaller than 1440px (but larger than mobile) */
+@media (max-width: 1439px) and (min-width: 728px) {
+  .desktop-grid {
     display: none !important;
   }
 }

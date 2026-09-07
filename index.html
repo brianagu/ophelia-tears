@@ -70,8 +70,38 @@
     </div>
   </div>
 
-  <!-- Design grid overlay -->
-  <svg class="grid-overlay" viewBox="0 0 1440 976" preserveAspectRatio="none">
+  <!-- Mobile Design grid overlay -->
+  <svg class="grid-overlay mobile-grid" viewBox="0 0 375 812" preserveAspectRatio="none">
+    <defs>
+      <style>
+        .grid-column { fill: rgba(100, 150, 200, 0.08); }
+        .grid-line { stroke: rgba(100, 150, 200, 0.3); stroke-width: 1; }
+        .grid-label { font-family: 'Courier New', monospace; font-size: 8px; fill: rgba(100, 150, 200, 0.5); }
+      </style>
+    </defs>
+
+    <!-- Column backgrounds -->
+    <g class="grid-columns">
+      <rect class="grid-column" x="31" y="0" width="157.5" height="812" />
+      <rect class="grid-column" x="188.5" y="0" width="157.5" height="812" />
+    </g>
+
+    <!-- Vertical grid lines -->
+    <g class="grid-lines">
+      <line class="grid-line" x1="31" y1="0" x2="31" y2="812" />
+      <line class="grid-line" x1="188.5" y1="0" x2="188.5" y2="812" />
+      <line class="grid-line" x1="346" y1="0" x2="346" y2="812" />
+    </g>
+
+    <!-- Column labels -->
+    <g class="grid-labels">
+      <text class="grid-label" x="35" y="12">Col 1</text>
+      <text class="grid-label" x="192.5" y="12">Col 2</text>
+    </g>
+  </svg>
+
+  <!-- Design grid overlay (Desktop) -->
+  <svg class="grid-overlay desktop-grid" viewBox="0 0 1440 976" preserveAspectRatio="none">
     <defs>
       <style>
         .grid-column { fill: rgba(100, 150, 200, 0.08); }

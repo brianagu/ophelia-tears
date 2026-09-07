@@ -326,11 +326,17 @@ if (studioImg.complete) {
 // Start animation loop
 requestAnimationFrame(animate);
 
-// ---- Grid overlay toggle (unchanged) ----
-const gridOverlay = document.querySelector('.grid-overlay');
+// ---- Grid overlay toggle ----
+const desktopGrid = document.querySelector('.desktop-grid');
+const mobileGridOverlay = document.querySelector('.mobile-grid');
 document.addEventListener('keydown', (e) => {
   if (e.key.toLowerCase() === 'g') {
-    gridOverlay.classList.toggle('grid-visible');
+    // Toggle both grids - whichever one is visible will show/hide
+    if (window.innerWidth <= 727) {
+      mobileGridOverlay?.classList.toggle('grid-visible');
+    } else {
+      desktopGrid?.classList.toggle('grid-visible');
+    }
   }
 });
 
