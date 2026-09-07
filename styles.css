@@ -65,6 +65,18 @@ body {
   opacity: 0.7;
 }
 
+.nav-link-external {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.nav-arrow {
+  width: 7.616px;
+  height: 7.626px;
+  display: inline-block;
+}
+
 .header-right {
   flex: 0 0 auto;
   padding: 12px 16px;
@@ -81,8 +93,21 @@ body {
   white-space: nowrap;
 }
 
+.header-right {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+}
+
 .header-right:hover {
   opacity: 0.9;
+}
+
+.button-arrow {
+  width: 7.616px;
+  height: 7.626px;
+  display: inline-block;
 }
 
 /* Hero Image */
@@ -156,6 +181,16 @@ body {
   line-height: 1;
   letter-spacing: 0.25em;
   text-transform: uppercase;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-icon {
+  width: 25.645px;
+  height: 15.806px;
+  display: inline-block;
 }
 
 .footer-copyright {
