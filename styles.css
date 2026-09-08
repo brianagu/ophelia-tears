@@ -384,7 +384,7 @@ body {
 
 .menu-flower-icon {
   width: 32px;
-  height: 32px;
+  height: 23px;
   display: block;
   margin-top: 16px;
   margin-left: 0;
@@ -448,10 +448,10 @@ body {
     height: 20px;
   }
 
-  /* Mobile footer container - stacked vertically */
+  /* Mobile footer container - stacked vertically, 24px above CTA */
   .footer-container {
     position: fixed;
-    bottom: 80px;
+    bottom: 104px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -469,7 +469,7 @@ body {
     width: calc(100% - 62px);
     max-width: 314px;
     position: fixed;
-    bottom: 80px;
+    bottom: 104px;
     left: 50%;
     transform: translateX(-50%);
   }
