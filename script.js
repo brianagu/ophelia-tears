@@ -348,6 +348,7 @@ const menuToggle = document.getElementById('menuToggle');
 const menuClose = document.getElementById('menuClose');
 const mobileMenu = document.getElementById('mobileMenu');
 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+const appleMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
 
 if (menuToggle && mobileMenu) {
   menuToggle.addEventListener('click', () => {
@@ -357,6 +358,10 @@ if (menuToggle && mobileMenu) {
     // Change status bar to white when menu opens
     if (themeColorMeta) {
       themeColorMeta.setAttribute('content', '#ffffff');
+      console.log('Status bar color changed to white');
+    }
+    if (appleMeta) {
+      appleMeta.setAttribute('content', 'black');
     }
   });
 
@@ -367,6 +372,10 @@ if (menuToggle && mobileMenu) {
     // Change status bar back to light blue when menu closes
     if (themeColorMeta) {
       themeColorMeta.setAttribute('content', '#d5f1ff');
+      console.log('Status bar color changed to light blue');
+    }
+    if (appleMeta) {
+      appleMeta.setAttribute('content', 'black-translucent');
     }
   });
 }
