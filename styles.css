@@ -593,6 +593,7 @@ body {
     max-width: 314px !important;
     pointer-events: auto !important;
     display: flex !important;
+    font-size: 18px !important;
   }
 
   .mobile-menu-cta {
@@ -615,6 +616,7 @@ body {
     width: calc(100% - 62px);
     max-width: 314px;
     display: flex;
+    font-size: 18px;
   }
 }
 
