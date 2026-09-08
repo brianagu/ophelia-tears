@@ -310,7 +310,6 @@ body {
   background-color: white;
   z-index: 3;
   flex-direction: column;
-  overflow-y: auto;
 }
 
 .mobile-menu.active {
@@ -355,6 +354,18 @@ body {
   height: 7.626px;
 }
 
+.mobile-menu-cta {
+  display: flex;
+  justify-content: center;
+  padding: 40px 27px;
+  margin-top: auto;
+}
+
+.mobile-menu-cta .header-right {
+  width: calc(100% - 0px);
+  max-width: 314px;
+}
+
 /* Mobile Responsive */
 @media (max-width: 727px) {
   /* Hide desktop navigation */
@@ -397,10 +408,12 @@ body {
 
   /* Mobile footer container - stacked vertically */
   .footer-container {
-    position: fixed;
+    position: absolute;
     bottom: 80px;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 100%;
+    max-width: 375px;
     display: flex;
     justify-content: center;
     z-index: 1;
