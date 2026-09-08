@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+.hidden {
+  display: none !important;
+}
+
 body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background-color: #d5f1ff;
@@ -350,6 +354,9 @@ body {
   cursor: pointer;
   padding: 0;
   z-index: 4;
+  position: relative;
+  width: 24px;
+  height: 24px;
 }
 
 .menu-toggle span {
@@ -360,16 +367,27 @@ body {
   transition: all 0.3s ease;
 }
 
+.menu-toggle.active {
+  gap: 0;
+}
+
+.menu-toggle.active span {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 .menu-toggle.active span:nth-child(1) {
-  transform: rotate(-45deg);
+  transform: translateY(-50%) rotate(-45deg);
 }
 
 .menu-toggle.active span:nth-child(2) {
-  display: none;
+  opacity: 0;
 }
 
 .menu-toggle.active span:nth-child(3) {
-  transform: rotate(-135deg) scaleY(1);
+  transform: translateY(-50%) rotate(45deg);
 }
 
 /* Mobile Menu Overlay */

@@ -347,17 +347,26 @@ document.addEventListener('keydown', (e) => {
 const menuToggle = document.getElementById('menuToggle');
 const menuClose = document.getElementById('menuClose');
 const mobileMenu = document.getElementById('mobileMenu');
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 
 if (menuToggle && mobileMenu) {
   menuToggle.addEventListener('click', () => {
     menuToggle.classList.add('active');
     mobileMenu.classList.add('active');
     document.body.style.overflow = 'hidden';
+    // Change status bar to white when menu opens
+    if (themeColorMeta) {
+      themeColorMeta.setAttribute('content', '#ffffff');
+    }
   });
 
   menuClose.addEventListener('click', () => {
     menuToggle.classList.remove('active');
     mobileMenu.classList.remove('active');
     document.body.style.overflow = 'auto';
+    // Change status bar back to light blue when menu closes
+    if (themeColorMeta) {
+      themeColorMeta.setAttribute('content', '#d5f1ff');
+    }
   });
 }
