@@ -90,10 +90,13 @@ function createPlaneWithAspectRatio(containerWidth, containerHeight, aspectRatio
 }
 
 function initRipple() {
-  const studioImg = document.querySelector('.studio-name-img');
+  // Select the appropriate image based on viewport width
+  const isMobile = window.innerWidth <= 727;
+  const selector = isMobile ? '.studio-name-img.mobile' : '.studio-name-img.desktop';
+  const studioImg = document.querySelector(selector);
   container = document.getElementById('studio-name-container');
 
-  console.log('initRipple called, image complete:', studioImg.complete, 'naturalWidth:', studioImg.naturalWidth);
+  console.log('initRipple called, viewport:', isMobile ? 'mobile' : 'desktop', 'image complete:', studioImg.complete, 'naturalWidth:', studioImg.naturalWidth);
 
   if (!studioImg.complete || !studioImg.naturalWidth) {
     console.warn('Image not loaded yet');
