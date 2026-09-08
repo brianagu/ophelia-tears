@@ -334,6 +334,11 @@ body {
   display: flex;
 }
 
+/* Hide footer when mobile menu is open */
+.mobile-menu.active ~ .footer-container {
+  visibility: hidden;
+}
+
 .mobile-menu-header {
   display: flex;
   justify-content: space-between;
@@ -370,6 +375,25 @@ body {
 .mobile-menu-content img {
   width: 7.616px;
   height: 7.626px;
+}
+
+.aftercare-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.aftercare-wrapper a {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.aftercare-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
 }
 
 .mobile-menu-cta {
@@ -484,6 +508,7 @@ body {
     position: fixed;
     bottom: 0;
     left: 0;
+    right: 0;
     width: 100%;
     height: 80px;
     background-color: #ffffff;
@@ -493,11 +518,13 @@ body {
     padding: 24px 0;
     z-index: 2;
     box-sizing: border-box;
+    pointer-events: auto;
   }
 
   .mobile-cta-container .header-right {
     width: calc(100% - 62px);
     max-width: 314px;
+    pointer-events: auto;
   }
 }
 
