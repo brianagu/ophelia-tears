@@ -360,14 +360,4 @@ if (menuToggle && mobileMenu) {
     mobileMenu.classList.remove('active');
     document.body.style.overflow = 'auto';
   });
-
-  // Close menu when clicking on a link
-  const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-  mobileMenuLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      menuToggle.classList.remove('active');
-      mobileMenu.classList.remove('active');
-      document.body.style.overflow = 'auto';
-    });
-  });
 }
