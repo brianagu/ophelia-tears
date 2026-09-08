@@ -152,6 +152,24 @@ body {
   z-index: -1;
 }
 
+.studio-name-img.desktop {
+  display: block;
+}
+
+.studio-name-img.mobile {
+  display: none;
+}
+
+@media (max-width: 727px) {
+  .studio-name-img.desktop {
+    display: none;
+  }
+
+  .studio-name-img.mobile {
+    display: block;
+  }
+}
+
 #studio-name-canvas {
   position: absolute !important;
   inset: 0 !important;
@@ -406,17 +424,21 @@ body {
     height: clamp(300px, 80vw, 600px);
   }
 
+  .aftercare-icon {
+    width: 20px;
+    height: 20px;
+  }
+
   /* Mobile footer container - stacked vertically */
   .footer-container {
-    position: absolute;
+    position: fixed;
     bottom: 80px;
     left: 50%;
     transform: translateX(-50%);
-    width: 100%;
-    max-width: 375px;
     display: flex;
     justify-content: center;
-    z-index: 1;
+    z-index: 3;
+    width: 100%;
   }
 
   .footer {
