@@ -281,6 +281,41 @@ body {
   .desktop-grid.grid-visible {
     display: block;
   }
+
+  /* Hide mobile CTA on desktop */
+  .mobile-cta-container {
+    display: none !important;
+  }
+
+  /* Desktop footer layout */
+  .footer {
+    position: absolute !important;
+    bottom: 24px !important;
+    left: 60px !important;
+    transform: none !important;
+    width: calc(100% - 120px) !important;
+    max-width: none !important;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 16px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 3 !important;
+  }
+
+  .footer-address {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 16px !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .footer-icon {
+    width: 25.645px !important;
+    height: 15.806px !important;
+    flex-shrink: 0 !important;
+  }
 }
 
 /* Hide desktop grid on viewports smaller than 1440px (but larger than mobile) */
