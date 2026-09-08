@@ -287,34 +287,49 @@ body {
     display: none !important;
   }
 
-  /* Desktop footer layout */
+  /* Desktop footer layout - matches Figma */
   .footer {
     position: absolute !important;
     bottom: 24px !important;
-    left: 60px !important;
-    transform: none !important;
-    width: calc(100% - 120px) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: auto !important;
     max-width: none !important;
-    display: flex !important;
-    flex-direction: row !important;
-    gap: 16px !important;
+    display: grid !important;
+    grid-template-columns: auto auto auto !important;
+    grid-template-rows: auto auto !important;
+    row-gap: 8px !important;
+    column-gap: 16px !important;
     align-items: center !important;
-    justify-content: center !important;
+    justify-items: center !important;
     z-index: 3 !important;
   }
 
   .footer-address {
-    display: flex !important;
-    flex-direction: row !important;
-    gap: 16px !important;
-    align-items: center !important;
-    justify-content: center !important;
+    grid-column: 1 / 2 !important;
+    grid-row: 1 !important;
+    margin: 0 !important;
+  }
+
+  .footer-address:nth-of-type(2) {
+    grid-column: 3 / 4 !important;
+    grid-row: 1 !important;
+  }
+
+  .footer-copyright {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin: 0 !important;
   }
 
   .footer-icon {
     width: 25.645px !important;
     height: 15.806px !important;
     flex-shrink: 0 !important;
+    grid-column: 2 / 3 !important;
+    grid-row: 1 !important;
   }
 }
 
