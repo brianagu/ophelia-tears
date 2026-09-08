@@ -43,7 +43,6 @@
         <a href="https://venue.ink/@snakeroots.00/flash" target="_blank">Browse Flash <img src="arrow-icon.svg" alt=""></a>
         <a href="https://venue.ink/@snakeroots.00/page/info" target="_blank">Booking Info <img src="arrow-icon.svg" alt=""></a>
         <a href="https://venue.ink/@snakeroots.00/page/aftercare" target="_blank">Aftercare <img src="arrow-icon.svg" alt=""></a>
-        <p>❋</p>
       </div>
     </div>
 
@@ -55,22 +54,23 @@
       <img src="hero-img-01.png" alt="Ophelia's Tears artwork">
     </div>
 
-    <div class="footer">
-      <div class="footer-address">
-        <span>12 PARK ST, BROOKLYN, NY</span>
+    <!-- Mobile Footer Container (appears on homepage) -->
+    <div class="footer-container">
+      <div class="footer">
         <img class="footer-icon" src="flower-icon.svg" alt="">
-        <span>BY APPOINTMENT ONLY</span>
+        <p class="footer-address">12 PARK ST, BROOKLYN, NY</p>
+        <p class="footer-address">BY APPOINTMENT ONLY</p>
+        <p class="footer-copyright">©2026 OPHELIA'S TEARS STUDIO</p>
       </div>
-      <p class="footer-copyright">©2026 OPHELIA'S TEARS STUDIO</p>
     </div>
 
-    <!-- Mobile Booking Button -->
-    <div class="mobile-booking-button">
+    <!-- Mobile Booking Button (White Container) -->
+    <div class="mobile-cta-container">
       <a class="header-right" href="https://venue.ink/@snakeroots.00" target="_blank">Booking Form <img class="button-arrow" src="arrow-icon-white.svg" alt=""></a>
     </div>
   </div>
 
-  <!-- Mobile Design grid overlay -->
+  <!-- Mobile Design grid overlay (375px) -->
   <svg class="grid-overlay mobile-grid" viewBox="0 0 375 812" preserveAspectRatio="none">
     <defs>
       <style>
@@ -80,23 +80,25 @@
       </style>
     </defs>
 
+    <!-- Margin guides -->
+    <line class="grid-line" x1="31" y1="0" x2="31" y2="812" />
+    <line class="grid-line" x1="344" y1="0" x2="344" y2="812" />
+
     <!-- Column backgrounds -->
     <g class="grid-columns">
-      <rect class="grid-column" x="31" y="0" width="157.5" height="812" />
-      <rect class="grid-column" x="188.5" y="0" width="157.5" height="812" />
+      <rect class="grid-column" x="31" y="0" width="156.5" height="812" />
+      <rect class="grid-column" x="187.5" y="0" width="156.5" height="812" />
     </g>
 
     <!-- Vertical grid lines -->
     <g class="grid-lines">
-      <line class="grid-line" x1="31" y1="0" x2="31" y2="812" />
-      <line class="grid-line" x1="188.5" y1="0" x2="188.5" y2="812" />
-      <line class="grid-line" x1="346" y1="0" x2="346" y2="812" />
+      <line class="grid-line" x1="187.5" y1="0" x2="187.5" y2="812" />
     </g>
 
     <!-- Column labels -->
     <g class="grid-labels">
       <text class="grid-label" x="35" y="12">Col 1</text>
-      <text class="grid-label" x="192.5" y="12">Col 2</text>
+      <text class="grid-label" x="191.5" y="12">Col 2</text>
     </g>
   </svg>
 
