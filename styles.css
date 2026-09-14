@@ -288,23 +288,23 @@ body {
   display: block;
 }
 
-/* S Breakpoint grid */
+/* S Breakpoint grid - flexible width, fixed margins & gutters */
 .s-grid {
-  width: 375px;
-  height: 812px;
+  width: 100vw;
+  height: 100vh;
   left: 0;
   top: 0;
 }
 
-/* M Breakpoint grid */
+/* M Breakpoint grid - flexible width, fixed margins & gutters */
 .m-grid {
-  width: 720px;
-  height: 812px;
+  width: 100vw;
+  height: 100vh;
   left: 0;
   top: 0;
 }
 
-/* L Breakpoint grid */
+/* L Breakpoint grid - flexible width, fixed margins & gutters */
 .l-grid {
   width: 100vw;
   height: 100vh;
