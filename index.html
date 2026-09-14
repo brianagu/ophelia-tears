@@ -76,7 +76,7 @@
     </div>
   </div>
 
-  <!-- S Breakpoint Grid (375px) -->
+  <!-- S Breakpoint Grid (375px) - 4 columns, 24px margins, 20px gutters -->
   <svg class="grid-overlay s-grid" viewBox="0 0 375 812" preserveAspectRatio="none">
     <defs>
       <style>
@@ -87,29 +87,89 @@
     </defs>
 
     <!-- Margin guides -->
-    <line class="grid-line" x1="31" y1="0" x2="31" y2="812" />
-    <line class="grid-line" x1="344" y1="0" x2="344" y2="812" />
+    <line class="grid-line" x1="24" y1="0" x2="24" y2="812" />
+    <line class="grid-line" x1="351" y1="0" x2="351" y2="812" />
 
-    <!-- Column backgrounds -->
+    <!-- Column backgrounds (4 columns: 66.75px each, 20px gutters) -->
     <g class="grid-columns">
-      <rect class="grid-column" x="31" y="0" width="156.5" height="812" />
-      <rect class="grid-column" x="187.5" y="0" width="156.5" height="812" />
+      <rect class="grid-column" x="24" y="0" width="66.75" height="812" />
+      <rect class="grid-column" x="110.75" y="0" width="66.75" height="812" />
+      <rect class="grid-column" x="197.5" y="0" width="66.75" height="812" />
+      <rect class="grid-column" x="284.25" y="0" width="66.75" height="812" />
     </g>
 
     <!-- Vertical grid lines -->
     <g class="grid-lines">
-      <line class="grid-line" x1="187.5" y1="0" x2="187.5" y2="812" />
+      <line class="grid-line" x1="24" y1="0" x2="24" y2="812" />
+      <line class="grid-line" x1="110.75" y1="0" x2="110.75" y2="812" />
+      <line class="grid-line" x1="197.5" y1="0" x2="197.5" y2="812" />
+      <line class="grid-line" x1="284.25" y1="0" x2="284.25" y2="812" />
+      <line class="grid-line" x1="351" y1="0" x2="351" y2="812" />
     </g>
 
     <!-- Column labels -->
     <g class="grid-labels">
-      <text class="grid-label" x="35" y="12">Col 1</text>
-      <text class="grid-label" x="191.5" y="12">Col 2</text>
+      <text class="grid-label" x="28" y="12">1</text>
+      <text class="grid-label" x="114.75" y="12">2</text>
+      <text class="grid-label" x="201.5" y="12">3</text>
+      <text class="grid-label" x="288.25" y="12">4</text>
     </g>
   </svg>
 
-  <!-- M Breakpoint Grid (720px) -->
+  <!-- M Breakpoint Grid (720px) - 8 columns, 32px margins, 20px gutters -->
   <svg class="grid-overlay m-grid" viewBox="0 0 720 812" preserveAspectRatio="none">
+    <defs>
+      <style>
+        .grid-column { fill: rgba(100, 150, 200, 0.08); }
+        .grid-line { stroke: rgba(100, 150, 200, 0.3); stroke-width: 1; }
+        .grid-label { font-family: 'Courier New', monospace; font-size: 8px; fill: rgba(100, 150, 200, 0.5); }
+      </style>
+    </defs>
+
+    <!-- Margin guides -->
+    <line class="grid-line" x1="32" y1="0" x2="32" y2="812" />
+    <line class="grid-line" x1="688" y1="0" x2="688" y2="812" />
+
+    <!-- Column backgrounds (8 columns: 64.5px each, 20px gutters) -->
+    <g class="grid-columns">
+      <rect class="grid-column" x="32" y="0" width="64.5" height="812" />
+      <rect class="grid-column" x="116.5" y="0" width="64.5" height="812" />
+      <rect class="grid-column" x="201" y="0" width="64.5" height="812" />
+      <rect class="grid-column" x="285.5" y="0" width="64.5" height="812" />
+      <rect class="grid-column" x="370" y="0" width="64.5" height="812" />
+      <rect class="grid-column" x="454.5" y="0" width="64.5" height="812" />
+      <rect class="grid-column" x="539" y="0" width="64.5" height="812" />
+      <rect class="grid-column" x="623.5" y="0" width="64.5" height="812" />
+    </g>
+
+    <!-- Vertical grid lines -->
+    <g class="grid-lines">
+      <line class="grid-line" x1="32" y1="0" x2="32" y2="812" />
+      <line class="grid-line" x1="116.5" y1="0" x2="116.5" y2="812" />
+      <line class="grid-line" x1="201" y1="0" x2="201" y2="812" />
+      <line class="grid-line" x1="285.5" y1="0" x2="285.5" y2="812" />
+      <line class="grid-line" x1="370" y1="0" x2="370" y2="812" />
+      <line class="grid-line" x1="454.5" y1="0" x2="454.5" y2="812" />
+      <line class="grid-line" x1="539" y1="0" x2="539" y2="812" />
+      <line class="grid-line" x1="623.5" y1="0" x2="623.5" y2="812" />
+      <line class="grid-line" x1="688" y1="0" x2="688" y2="812" />
+    </g>
+
+    <!-- Column labels -->
+    <g class="grid-labels">
+      <text class="grid-label" x="36" y="12">1</text>
+      <text class="grid-label" x="120.5" y="12">2</text>
+      <text class="grid-label" x="205" y="12">3</text>
+      <text class="grid-label" x="289.5" y="12">4</text>
+      <text class="grid-label" x="374" y="12">5</text>
+      <text class="grid-label" x="458.5" y="12">6</text>
+      <text class="grid-label" x="543" y="12">7</text>
+      <text class="grid-label" x="627.5" y="12">8</text>
+    </g>
+  </svg>
+
+  <!-- L Breakpoint Grid (1440px) - 12 columns, 40px margins, 32px gutters -->
+  <svg class="grid-overlay l-grid" viewBox="0 0 1440 976" preserveAspectRatio="none">
     <defs>
       <style>
         .grid-column { fill: rgba(100, 150, 200, 0.08); }
@@ -119,76 +179,56 @@
     </defs>
 
     <!-- Margin guides -->
-    <line class="grid-line" x1="32" y1="0" x2="32" y2="812" />
-    <line class="grid-line" x1="688" y1="0" x2="688" y2="812" />
+    <line class="grid-line" x1="40" y1="0" x2="40" y2="976" />
+    <line class="grid-line" x1="1400" y1="0" x2="1400" y2="976" />
 
-    <!-- Column backgrounds (3 columns) -->
+    <!-- Column backgrounds (12 columns: 84px each, 32px gutters) -->
     <g class="grid-columns">
-      <rect class="grid-column" x="32" y="0" width="218.67" height="812" />
-      <rect class="grid-column" x="266.67" y="0" width="218.67" height="812" />
-      <rect class="grid-column" x="501.33" y="0" width="218.67" height="812" />
+      <rect class="grid-column" x="40" y="0" width="84" height="976" />
+      <rect class="grid-column" x="156" y="0" width="84" height="976" />
+      <rect class="grid-column" x="272" y="0" width="84" height="976" />
+      <rect class="grid-column" x="388" y="0" width="84" height="976" />
+      <rect class="grid-column" x="504" y="0" width="84" height="976" />
+      <rect class="grid-column" x="620" y="0" width="84" height="976" />
+      <rect class="grid-column" x="736" y="0" width="84" height="976" />
+      <rect class="grid-column" x="852" y="0" width="84" height="976" />
+      <rect class="grid-column" x="968" y="0" width="84" height="976" />
+      <rect class="grid-column" x="1084" y="0" width="84" height="976" />
+      <rect class="grid-column" x="1200" y="0" width="84" height="976" />
+      <rect class="grid-column" x="1316" y="0" width="84" height="976" />
     </g>
 
     <!-- Vertical grid lines -->
     <g class="grid-lines">
-      <line class="grid-line" x1="32" y1="0" x2="32" y2="812" />
-      <line class="grid-line" x1="266.67" y1="0" x2="266.67" y2="812" />
-      <line class="grid-line" x1="501.33" y1="0" x2="501.33" y2="812" />
-      <line class="grid-line" x1="688" y1="0" x2="688" y2="812" />
+      <line class="grid-line" x1="40" y1="0" x2="40" y2="976" />
+      <line class="grid-line" x1="156" y1="0" x2="156" y2="976" />
+      <line class="grid-line" x1="272" y1="0" x2="272" y2="976" />
+      <line class="grid-line" x1="388" y1="0" x2="388" y2="976" />
+      <line class="grid-line" x1="504" y1="0" x2="504" y2="976" />
+      <line class="grid-line" x1="620" y1="0" x2="620" y2="976" />
+      <line class="grid-line" x1="736" y1="0" x2="736" y2="976" />
+      <line class="grid-line" x1="852" y1="0" x2="852" y2="976" />
+      <line class="grid-line" x1="968" y1="0" x2="968" y2="976" />
+      <line class="grid-line" x1="1084" y1="0" x2="1084" y2="976" />
+      <line class="grid-line" x1="1200" y1="0" x2="1200" y2="976" />
+      <line class="grid-line" x1="1316" y1="0" x2="1316" y2="976" />
+      <line class="grid-line" x1="1400" y1="0" x2="1400" y2="976" />
     </g>
 
     <!-- Column labels -->
     <g class="grid-labels">
-      <text class="grid-label" x="36" y="12">Col 1</text>
-      <text class="grid-label" x="270" y="12">Col 2</text>
-      <text class="grid-label" x="505" y="12">Col 3</text>
-    </g>
-  </svg>
-
-  <!-- L Breakpoint Grid (1440px) -->
-  <svg class="grid-overlay l-grid" viewBox="0 0 1440 976" preserveAspectRatio="none">
-    <defs>
-      <style>
-        .grid-column { fill: rgba(100, 150, 200, 0.08); }
-        .grid-line { stroke: rgba(100, 150, 200, 0.3); stroke-width: 1; }
-        .grid-label { font-family: 'Courier New', monospace; font-size: 10px; fill: rgba(100, 150, 200, 0.5); }
-      </style>
-    </defs>
-
-    <!-- Column backgrounds -->
-    <g class="grid-columns">
-      <rect class="grid-column" x="60" y="0" width="153.33" height="976" />
-      <rect class="grid-column" x="293.33" y="0" width="153.33" height="976" />
-      <rect class="grid-column" x="526.67" y="0" width="153.33" height="976" />
-      <rect class="grid-column" x="760" y="0" width="153.33" height="976" />
-      <rect class="grid-column" x="993.33" y="0" width="153.33" height="976" />
-      <rect class="grid-column" x="1226.67" y="0" width="153.33" height="976" />
-    </g>
-
-    <!-- Vertical grid lines -->
-    <g class="grid-lines">
-      <line class="grid-line" x1="60" y1="0" x2="60" y2="976" />
-      <line class="grid-line" x1="213.33" y1="0" x2="213.33" y2="976" />
-      <line class="grid-line" x1="293.33" y1="0" x2="293.33" y2="976" />
-      <line class="grid-line" x1="446.67" y1="0" x2="446.67" y2="976" />
-      <line class="grid-line" x1="526.67" y1="0" x2="526.67" y2="976" />
-      <line class="grid-line" x1="680" y1="0" x2="680" y2="976" />
-      <line class="grid-line" x1="760" y1="0" x2="760" y2="976" />
-      <line class="grid-line" x1="913.33" y1="0" x2="913.33" y2="976" />
-      <line class="grid-line" x1="993.33" y1="0" x2="993.33" y2="976" />
-      <line class="grid-line" x1="1146.67" y1="0" x2="1146.67" y2="976" />
-      <line class="grid-line" x1="1226.67" y1="0" x2="1226.67" y2="976" />
-      <line class="grid-line" x1="1380" y1="0" x2="1380" y2="976" />
-    </g>
-
-    <!-- Column labels -->
-    <g class="grid-labels">
-      <text class="grid-label" x="66" y="15">Col 1</text>
-      <text class="grid-label" x="299.33" y="15">Col 2</text>
-      <text class="grid-label" x="532.67" y="15">Col 3</text>
-      <text class="grid-label" x="766" y="15">Col 4</text>
-      <text class="grid-label" x="999.33" y="15">Col 5</text>
-      <text class="grid-label" x="1232.67" y="15">Col 6</text>
+      <text class="grid-label" x="44" y="15">1</text>
+      <text class="grid-label" x="160" y="15">2</text>
+      <text class="grid-label" x="276" y="15">3</text>
+      <text class="grid-label" x="392" y="15">4</text>
+      <text class="grid-label" x="508" y="15">5</text>
+      <text class="grid-label" x="624" y="15">6</text>
+      <text class="grid-label" x="740" y="15">7</text>
+      <text class="grid-label" x="856" y="15">8</text>
+      <text class="grid-label" x="972" y="15">9</text>
+      <text class="grid-label" x="1088" y="15">10</text>
+      <text class="grid-label" x="1204" y="15">11</text>
+      <text class="grid-label" x="1320" y="15">12</text>
     </g>
   </svg>
 

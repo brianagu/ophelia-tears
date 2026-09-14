@@ -344,23 +344,49 @@ requestAnimationFrame(animate);
 const sGrid = document.querySelector('.s-grid');
 const mGrid = document.querySelector('.m-grid');
 const lGrid = document.querySelector('.l-grid');
+let gridVisible = false;
 
-function toggleGridForCurrentBreakpoint() {
-  if (window.innerWidth <= BREAKPOINTS.S_MAX) {
-    // S Breakpoint (≤719px)
-    sGrid?.classList.toggle('grid-visible');
-  } else if (window.innerWidth <= BREAKPOINTS.M_MAX) {
-    // M Breakpoint (720–1079px)
-    mGrid?.classList.toggle('grid-visible');
+function toggleAllGrids() {
+  gridVisible = !gridVisible;
+  if (gridVisible) {
+    // Show the appropriate grid for current breakpoint
+    if (window.innerWidth <= BREAKPOINTS.S_MAX) {
+      sGrid?.classList.add('grid-visible');
+    } else if (window.innerWidth <= BREAKPOINTS.M_MAX) {
+      mGrid?.classList.add('grid-visible');
+    } else {
+      lGrid?.classList.add('grid-visible');
+    }
   } else {
-    // L Breakpoint (≥1080px)
-    lGrid?.classList.toggle('grid-visible');
+    // Hide all grids
+    sGrid?.classList.remove('grid-visible');
+    mGrid?.classList.remove('grid-visible');
+    lGrid?.classList.remove('grid-visible');
   }
 }
 
+// Handle breakpoint changes while grid is visible
+window.addEventListener('resize', () => {
+  if (gridVisible) {
+    // Hide all first
+    sGrid?.classList.remove('grid-visible');
+    mGrid?.classList.remove('grid-visible');
+    lGrid?.classList.remove('grid-visible');
+
+    // Show correct one for new breakpoint
+    if (window.innerWidth <= BREAKPOINTS.S_MAX) {
+      sGrid?.classList.add('grid-visible');
+    } else if (window.innerWidth <= BREAKPOINTS.M_MAX) {
+      mGrid?.classList.add('grid-visible');
+    } else {
+      lGrid?.classList.add('grid-visible');
+    }
+  }
+});
+
 document.addEventListener('keydown', (e) => {
   if (e.key.toLowerCase() === 'g') {
-    toggleGridForCurrentBreakpoint();
+    toggleAllGrids();
   }
 });
 
