@@ -397,32 +397,38 @@ const mobileMenu = document.getElementById('mobileMenu');
 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 const appleMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
 
-if (menuToggle && mobileMenu) {
-  menuToggle.addEventListener('click', () => {
-    menuToggle.classList.add('active');
-    mobileMenu.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    // Change status bar to white when menu opens
-    if (themeColorMeta) {
-      themeColorMeta.setAttribute('content', '#ffffff');
-      console.log('Status bar color changed to white');
-    }
-    if (appleMeta) {
-      appleMeta.setAttribute('content', 'black');
-    }
-  });
+function openMobileMenu() {
+  if (menuToggle) menuToggle.classList.add('active');
+  if (mobileMenu) mobileMenu.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  // Change status bar to cream when menu opens
+  if (themeColorMeta) {
+    themeColorMeta.setAttribute('content', '#fffaf3');
+    console.log('Status bar color changed to cream');
+  }
+  if (appleMeta) {
+    appleMeta.setAttribute('content', 'black');
+  }
+}
 
-  menuClose.addEventListener('click', () => {
-    menuToggle.classList.remove('active');
-    mobileMenu.classList.remove('active');
-    document.body.style.overflow = 'auto';
-    // Change status bar back to light blue when menu closes
-    if (themeColorMeta) {
-      themeColorMeta.setAttribute('content', '#d5f1ff');
-      console.log('Status bar color changed to light blue');
-    }
-    if (appleMeta) {
-      appleMeta.setAttribute('content', 'black-translucent');
-    }
-  });
+function closeMobileMenu() {
+  if (menuToggle) menuToggle.classList.remove('active');
+  if (mobileMenu) mobileMenu.classList.remove('active');
+  document.body.style.overflow = 'auto';
+  // Change status bar back to light blue when menu closes
+  if (themeColorMeta) {
+    themeColorMeta.setAttribute('content', '#d5f1ff');
+    console.log('Status bar color changed to light blue');
+  }
+  if (appleMeta) {
+    appleMeta.setAttribute('content', 'black-translucent');
+  }
+}
+
+if (menuToggle) {
+  menuToggle.addEventListener('click', openMobileMenu);
+}
+
+if (menuClose) {
+  menuClose.addEventListener('click', closeMobileMenu);
 }

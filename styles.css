@@ -89,13 +89,10 @@ body {
   height: 26px;
   object-fit: contain;
   object-position: left center;
+  display: none;
 }
 
-/* Logo visibility per breakpoint */
-.mobile-logo-header {
-  display: block;
-}
-
+/* Desktop logo: only show on L breakpoint */
 .desktop-logo-header {
   display: none;
 }
@@ -155,9 +152,6 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
-}
-
-.header-right {
   display: flex;
   gap: 4px;
   align-items: center;
@@ -166,6 +160,15 @@ body {
 
 .header-right:hover {
   opacity: 0.9;
+}
+
+/* Book CTA positioning for S breakpoint */
+@media (max-width: 719px) /* S Breakpoint */ {
+  .header-right {
+    position: absolute;
+    right: 31px;
+    top: 24px;
+  }
 }
 
 .button-arrow {
@@ -362,13 +365,7 @@ body {
     display: block !important;
   }
 
-  /* Logo: show mobile, hide desktop in header */
-  .mobile-logo-header {
-    display: block;
-    width: 240px;
-    height: 32px;
-  }
-
+  /* Logo: hide desktop logo on M */
   .desktop-logo-header {
     display: none;
   }
@@ -377,6 +374,8 @@ body {
   .footer-logo {
     display: block !important;
     height: 60px;
+    width: 464px;
+    max-width: 100%;
   }
 
   /* M Breakpoint footer layout - horizontal row */
@@ -449,9 +448,9 @@ body {
     display: block;
   }
 
-  /* Logo swap: show desktop, hide mobile in header */
-  .mobile-logo-header {
-    display: none;
+<parameter name="new_string">  /* L Breakpoint: show desktop logo in header */
+  .header-left {
+    display: block !important;
   }
 
   .desktop-logo-header {
@@ -586,7 +585,7 @@ body {
   left: 0 !important;
   width: 100% !important;
   height: 100vh !important;
-  background-color: white !important;
+  background-color: #fffaf3 !important;
   z-index: 3;
   flex-direction: column;
 }
@@ -601,91 +600,149 @@ body {
 }
 
 .mobile-menu-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  position: relative;
+  height: 80px;
   padding: 24px 31px;
 }
 
-.mobile-menu-header img {
-  height: 32px;
-  width: auto;
+/* Close icon (X) - top left */
+.menu-close-icon {
+  position: absolute;
+  left: 24px;
+  top: 39px;
+  width: 24px;
+  height: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }
 
+.close-line {
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  background-color: #000000;
+  display: block;
+}
+
+.close-line-1 {
+  transform: rotate(-45deg);
+}
+
+.close-line-2 {
+  transform: rotate(45deg);
+}
+
+/* Book CTA in menu header - top right */
+.menu-header-cta {
+  position: absolute;
+  right: 31px;
+  top: 24px;
+  width: 114px;
+}
+
+/* Mobile menu navigation links */
 .mobile-menu-content {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 40px 27px;
+  padding: 120px 24px 40px;
   flex: 1;
 }
 
-.mobile-menu-content a,
-.mobile-menu-content p {
+.menu-link {
   font-family: 'Minion Pro', 'Garamond', serif;
   font-size: 24px;
   font-weight: normal;
   color: #000000;
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-style: dotted;
   cursor: pointer;
   display: flex;
   gap: 4px;
   align-items: center;
 }
 
-.mobile-menu-content img {
+.menu-link-external img {
   width: 7.616px;
   height: 7.626px;
 }
 
-.menu-flower-icon {
-  width: 32px !important;
-  height: 23px !important;
-  display: block !important;
-  margin-top: 16px !important;
-  margin-left: 0 !important;
-  align-self: flex-start !important;
+/* Remove arrow icon from Aftercare */
+.menu-link:last-child img {
+  display: none;
 }
 
-.mobile-menu-cta {
+/* Mobile menu footer (at bottom) */
+.mobile-menu-footer {
   display: flex;
-  justify-content: center;
-  padding: 40px 27px;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  padding: 24px 24px;
+  text-align: center;
   margin-top: auto;
 }
 
-.mobile-menu-cta .header-right {
-  width: calc(100% - 0px);
-  max-width: 314px;
+.mobile-menu-footer .footer-address {
+  display: block;
+  font-family: 'Minion Pro', 'Garamond', serif;
+  font-size: 10px;
+  font-weight: normal;
+  color: #000000;
+  line-height: 1;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.mobile-menu-footer .footer-copyright {
+  font-family: 'Minion Pro', 'Garamond', serif;
+  font-size: 10px;
+  font-weight: normal;
+  color: #000000;
+  line-height: 1;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.menu-footer-logo {
+  width: 326px;
+  height: 42px;
+  object-fit: contain;
+}
+
+.menu-footer-icon {
+  width: 26px;
+  height: 16px;
+  display: block;
+  /* Flower icon color: #DCC6A6 in menu */
+  filter: hue-rotate(180deg) saturate(0.8);
 }
 
 /* Mobile Responsive */
 @media (max-width: 719px) /* S Breakpoint */ {
-  /* Logo: show mobile, hide desktop in header */
-  .mobile-logo-header {
-    display: block;
-    width: 240.941px;
-    height: 32px;
-  }
-
+  /* Hide desktop logo on S */
   .desktop-logo-header {
     display: none;
   }
 
-  /* Show footer logo on S breakpoint */
-  .footer-logo {
-    display: block !important;
-    height: 42px;
+  /* Header layout: menu toggle left, Book CTA right */
+  .header {
+    left: 24px;
+    width: calc(100% - 48px);
+  }
+
+  /* Show mobile menu toggle button */
+  .menu-toggle {
+    display: flex;
   }
 
   /* Hide desktop navigation */
   .header-nav {
     display: none;
-  }
-
-  /* Show mobile menu toggle */
-  .menu-toggle {
-    display: flex;
   }
 
   /* Adjust header layout for mobile */
@@ -704,10 +761,15 @@ body {
     display: none;
   }
 
+  /* S Breakpoint: Desktop BG sizing */
+  .desktop-bg {
+    width: 540px;
+  }
+
   /* Adjust hero section for mobile */
   .hero-image {
-    width: clamp(300px, 80vw, 372px);
-    height: clamp(300px, 80vw, 372px);
+    width: 326px;
+    height: 326px;
     top: calc(50% - 40px);
   }
 
@@ -721,7 +783,7 @@ body {
     height: 20px;
   }
 
-  /* S Breakpoint footer - vertical stack, 24px above CTA */
+  /* S Breakpoint footer - vertical stack, logo first */
   .footer {
     position: fixed !important;
     bottom: 104px !important;
@@ -733,8 +795,15 @@ body {
     align-items: center !important;
     text-align: center !important;
     width: calc(100% - 62px) !important;
-    max-width: 314px !important;
+    max-width: 326px !important;
     z-index: 3 !important;
+  }
+
+  /* S: Show footer logo */
+  .footer-logo {
+    display: block !important;
+    height: 42px;
+    width: 326px;
   }
 
   .footer-address {
@@ -755,6 +824,8 @@ body {
     height: 15.806px;
     display: block !important;
     margin: 0 !important;
+    /* Flower icon color: #A9CDDE for homepage */
+    filter: drop-shadow(0 0 0 #A9CDDE);
   }
 
   .footer-copyright {
