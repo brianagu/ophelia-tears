@@ -340,17 +340,27 @@ if (studioImg.complete) {
 // Start animation loop
 requestAnimationFrame(animate);
 
-// ---- Grid overlay toggle ----
-const desktopGrid = document.querySelector('.desktop-grid');
-const mobileGridOverlay = document.querySelector('.mobile-grid');
+// ---- Grid overlay toggle (S/M/L breakpoints) ----
+const sGrid = document.querySelector('.s-grid');
+const mGrid = document.querySelector('.m-grid');
+const lGrid = document.querySelector('.l-grid');
+
+function toggleGridForCurrentBreakpoint() {
+  if (window.innerWidth <= BREAKPOINTS.S_MAX) {
+    // S Breakpoint (≤719px)
+    sGrid?.classList.toggle('grid-visible');
+  } else if (window.innerWidth <= BREAKPOINTS.M_MAX) {
+    // M Breakpoint (720–1079px)
+    mGrid?.classList.toggle('grid-visible');
+  } else {
+    // L Breakpoint (≥1080px)
+    lGrid?.classList.toggle('grid-visible');
+  }
+}
+
 document.addEventListener('keydown', (e) => {
   if (e.key.toLowerCase() === 'g') {
-    // Toggle grids based on breakpoint: S/M use mobile grid, L uses desktop grid
-    if (window.innerWidth <= BREAKPOINTS.M_MAX) {
-      mobileGridOverlay?.classList.toggle('grid-visible');
-    } else {
-      desktopGrid?.classList.toggle('grid-visible');
-    }
+    toggleGridForCurrentBreakpoint();
   }
 });
 

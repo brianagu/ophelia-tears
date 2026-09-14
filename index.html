@@ -76,8 +76,8 @@
     </div>
   </div>
 
-  <!-- Mobile Design grid overlay (375px) -->
-  <svg class="grid-overlay mobile-grid" viewBox="0 0 375 812" preserveAspectRatio="none">
+  <!-- S Breakpoint Grid (375px) -->
+  <svg class="grid-overlay s-grid" viewBox="0 0 375 812" preserveAspectRatio="none">
     <defs>
       <style>
         .grid-column { fill: rgba(100, 150, 200, 0.08); }
@@ -108,8 +108,45 @@
     </g>
   </svg>
 
-  <!-- Design grid overlay (Desktop) -->
-  <svg class="grid-overlay desktop-grid" viewBox="0 0 1440 976" preserveAspectRatio="none">
+  <!-- M Breakpoint Grid (720px) -->
+  <svg class="grid-overlay m-grid" viewBox="0 0 720 812" preserveAspectRatio="none">
+    <defs>
+      <style>
+        .grid-column { fill: rgba(100, 150, 200, 0.08); }
+        .grid-line { stroke: rgba(100, 150, 200, 0.3); stroke-width: 1; }
+        .grid-label { font-family: 'Courier New', monospace; font-size: 9px; fill: rgba(100, 150, 200, 0.5); }
+      </style>
+    </defs>
+
+    <!-- Margin guides -->
+    <line class="grid-line" x1="32" y1="0" x2="32" y2="812" />
+    <line class="grid-line" x1="688" y1="0" x2="688" y2="812" />
+
+    <!-- Column backgrounds (3 columns) -->
+    <g class="grid-columns">
+      <rect class="grid-column" x="32" y="0" width="218.67" height="812" />
+      <rect class="grid-column" x="266.67" y="0" width="218.67" height="812" />
+      <rect class="grid-column" x="501.33" y="0" width="218.67" height="812" />
+    </g>
+
+    <!-- Vertical grid lines -->
+    <g class="grid-lines">
+      <line class="grid-line" x1="32" y1="0" x2="32" y2="812" />
+      <line class="grid-line" x1="266.67" y1="0" x2="266.67" y2="812" />
+      <line class="grid-line" x1="501.33" y1="0" x2="501.33" y2="812" />
+      <line class="grid-line" x1="688" y1="0" x2="688" y2="812" />
+    </g>
+
+    <!-- Column labels -->
+    <g class="grid-labels">
+      <text class="grid-label" x="36" y="12">Col 1</text>
+      <text class="grid-label" x="270" y="12">Col 2</text>
+      <text class="grid-label" x="505" y="12">Col 3</text>
+    </g>
+  </svg>
+
+  <!-- L Breakpoint Grid (1440px) -->
+  <svg class="grid-overlay l-grid" viewBox="0 0 1440 976" preserveAspectRatio="none">
     <defs>
       <style>
         .grid-column { fill: rgba(100, 150, 200, 0.08); }

@@ -288,55 +288,59 @@ body {
   display: block;
 }
 
-/* Desktop grid */
-.desktop-grid {
-  width: 100vw;
-  height: 100vh;
-}
-
-/* Mobile grid */
-.mobile-grid {
+/* S Breakpoint grid */
+.s-grid {
   width: 375px;
   height: 812px;
   left: 0;
   top: 0;
 }
 
+/* M Breakpoint grid */
+.m-grid {
+  width: 720px;
+  height: 812px;
+  left: 0;
+  top: 0;
+}
+
+/* L Breakpoint grid */
+.l-grid {
+  width: 100vw;
+  height: 100vh;
+}
+
 /* Show/hide grid based on viewport */
 @media (max-width: 719px) /* S Breakpoint */ {
-  .desktop-grid {
+  /* Hide all grids except S grid */
+  .m-grid, .l-grid {
     display: none !important;
   }
 
-  .mobile-grid {
+  .s-grid {
     display: none;
   }
 
-  .mobile-grid.grid-visible {
+  .s-grid.grid-visible {
     display: block !important;
   }
 }
 
-@media (min-width: 720px) /* M+ Breakpoint */ {
-  .mobile-grid {
+@media (min-width: 720px) and (max-width: 1079px) /* M Breakpoint */ {
+  /* Hide all grids except M grid */
+  .s-grid, .l-grid {
     display: none !important;
   }
 
-  .desktop-grid {
-    width: 100vw;
-    height: 100vh;
+  .m-grid {
+    display: none;
   }
 
-  .desktop-grid.grid-visible {
-    display: block;
+  .m-grid.grid-visible {
+    display: block !important;
   }
 
-  /* Hide mobile CTA on desktop */
-  .mobile-cta-container {
-    display: none !important;
-  }
-
-  /* Desktop footer layout - matches Figma */
+  /* M Breakpoint footer layout - horizontal row */
   .footer {
     position: absolute !important;
     bottom: 24px !important;
@@ -344,48 +348,125 @@ body {
     transform: translateX(-50%) !important;
     width: auto !important;
     max-width: none !important;
-    display: grid !important;
-    grid-template-columns: auto auto auto !important;
-    grid-template-rows: auto auto !important;
-    row-gap: 8px !important;
-    column-gap: 16px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 16px !important;
     align-items: center !important;
-    justify-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
     z-index: 3 !important;
   }
 
   .footer-address {
-    grid-column: 1 / 2 !important;
-    grid-row: 1 !important;
+    display: inline !important;
+    font-family: 'Minion Pro', 'Garamond', serif;
+    font-size: 10px;
+    font-weight: normal;
+    color: #000000;
+    line-height: 1;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
     margin: 0 !important;
-  }
-
-  .footer-address:nth-of-type(2) {
-    grid-column: 3 / 4 !important;
-    grid-row: 1 !important;
   }
 
   .footer-copyright {
-    grid-column: 1 / -1 !important;
-    grid-row: 2 !important;
-    text-align: center !important;
-    width: 100% !important;
+    position: absolute !important;
+    bottom: -24px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    font-family: 'Minion Pro', 'Garamond', serif;
+    font-size: 10px;
+    font-weight: normal;
+    color: #000000;
+    line-height: 1;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
     margin: 0 !important;
+    text-align: center !important;
+    width: auto !important;
   }
 
   .footer-icon {
     width: 25.645px !important;
     height: 15.806px !important;
+    display: inline-block !important;
     flex-shrink: 0 !important;
-    grid-column: 2 / 3 !important;
-    grid-row: 1 !important;
+    margin: 0 !important;
   }
 }
 
-/* Hide desktop grid on viewports smaller than 1440px (but larger than mobile) */
-@media (max-width: 1079px) and (min-width: 720px) /* M Breakpoint */ {
-  .desktop-grid {
+@media (min-width: 1080px) /* L Breakpoint */ {
+  /* Hide all grids except L grid */
+  .s-grid, .m-grid {
     display: none !important;
+  }
+
+  .l-grid {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .l-grid.grid-visible {
+    display: block;
+  }
+
+  /* Hide mobile CTA on L breakpoint and above */
+  .mobile-cta-container {
+    display: none !important;
+  }
+
+  /* L Breakpoint footer layout - horizontal row with 12px font */
+  .footer {
+    position: absolute !important;
+    bottom: 24px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: auto !important;
+    max-width: none !important;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 16px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    z-index: 3 !important;
+  }
+
+  .footer-address {
+    display: inline !important;
+    font-family: 'Minion Pro', 'Garamond', serif;
+    font-size: 12px;
+    font-weight: normal;
+    color: #000000;
+    line-height: 1;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin: 0 !important;
+  }
+
+  .footer-copyright {
+    position: absolute !important;
+    bottom: -24px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    font-family: 'Minion Pro', 'Garamond', serif;
+    font-size: 12px;
+    font-weight: normal;
+    color: #000000;
+    line-height: 1;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin: 0 !important;
+    text-align: center !important;
+    width: auto !important;
+  }
+
+  .footer-icon {
+    width: 25.645px !important;
+    height: 15.806px !important;
+    display: inline-block !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
   }
 }
 
@@ -561,7 +642,7 @@ body {
     height: 20px;
   }
 
-  /* Mobile footer - stacked vertically, 24px above CTA */
+  /* S Breakpoint footer - vertical stack, 24px above CTA */
   .footer {
     position: fixed !important;
     bottom: 104px !important;
@@ -578,15 +659,7 @@ body {
   }
 
   .footer-address {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 0 !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 100% !important;
-  }
-
-  .footer-address {
+    display: block !important;
     font-family: 'Minion Pro', 'Garamond', serif;
     font-size: 10px;
     font-weight: normal;
@@ -594,13 +667,15 @@ body {
     line-height: 1;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    margin: 0;
+    margin: 0 !important;
+    width: 100% !important;
   }
 
   .footer-icon {
     width: 25.645px;
     height: 15.806px;
-    display: block;
+    display: block !important;
+    margin: 0 !important;
   }
 
   .footer-copyright {
@@ -611,7 +686,7 @@ body {
     line-height: 1;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    margin: 0;
+    margin: 0 !important;
   }
 
   /* Mobile CTA container - white background locked to bottom */
