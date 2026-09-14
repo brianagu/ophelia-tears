@@ -1,3 +1,14 @@
+// ---- Responsive Breakpoints (S/M/L Tiers) ----
+// S: 375–719px (mobile)
+// M: 720–1079px (tablet)
+// L: 1080px+ (desktop)
+const BREAKPOINTS = {
+  S_MAX: 719,
+  M_MIN: 720,
+  M_MAX: 1079,
+  L_MIN: 1080
+};
+
 // ---- Three.js WebGL Ripple Effect ----
 let scene, camera, renderer, rippleMaterial, container, planeMesh;
 let mouseX = 0, mouseY = 0;
@@ -91,12 +102,11 @@ function createPlaneWithAspectRatio(containerWidth, containerHeight, aspectRatio
 
 function initRipple() {
   // Select the appropriate image based on viewport width
-  const isMobile = window.innerWidth <= 727;
-  const selector = isMobile ? '.studio-name-img.mobile' : '.studio-name-img.desktop';
-  const studioImg = document.querySelector(selector);
+  // Use same image for all breakpoints (S/M/L)
+  const studioImg = document.querySelector('.studio-name-img.mobile') || document.querySelector('.studio-name-img.desktop');
   container = document.getElementById('studio-name-container');
 
-  console.log('initRipple called, viewport:', isMobile ? 'mobile' : 'desktop', 'image complete:', studioImg.complete, 'naturalWidth:', studioImg.naturalWidth);
+  console.log('initRipple called, viewport:', window.innerWidth, 'image complete:', studioImg.complete, 'naturalWidth:', studioImg.naturalWidth);
 
   if (!studioImg.complete || !studioImg.naturalWidth) {
     console.warn('Image not loaded yet');
@@ -202,9 +212,10 @@ function measureLayout() {
   // Additional layout calculations can go here if needed
 }
 
-// ---- Mobile viewport detection and auto-ripple ----
+// ---- Viewport detection and auto-ripple ----
+// Auto-ripple on S/M (≤1079px); no auto-ripple on L (≥1080px)
 function isMobileSize() {
-  return window.innerWidth >= 320 && window.innerWidth <= 768;
+  return window.innerWidth <= BREAKPOINTS.M_MAX;
 }
 
 function startAutoRipple() {
@@ -334,8 +345,8 @@ const desktopGrid = document.querySelector('.desktop-grid');
 const mobileGridOverlay = document.querySelector('.mobile-grid');
 document.addEventListener('keydown', (e) => {
   if (e.key.toLowerCase() === 'g') {
-    // Toggle both grids - whichever one is visible will show/hide
-    if (window.innerWidth <= 727) {
+    // Toggle grids based on breakpoint: S/M use mobile grid, L uses desktop grid
+    if (window.innerWidth <= BREAKPOINTS.M_MAX) {
       mobileGridOverlay?.classList.toggle('grid-visible');
     } else {
       desktopGrid?.classList.toggle('grid-visible');

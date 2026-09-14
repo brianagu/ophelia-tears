@@ -1,3 +1,48 @@
+/* ---- CSS Custom Properties / Design Tokens ---- */
+:root {
+  /* Breakpoints (for reference; @media uses px values directly) */
+  /* S: 375–719px, M: 720–1079px, L: 1080px+ */
+
+  /* Colors */
+  --color-bg: #d5f1ff;
+  --color-text: #000000;
+  --color-text-secondary: #111111;
+  --color-cta-bg: #224b60;
+  --color-cta-text: #ffffff;
+  --color-white: #ffffff;
+  --color-border-white: #ffffff;
+  --color-black: #000000;
+  --color-menu-bg: #fffaf3;
+
+  /* Spacing Scale */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 60px;
+
+  /* Typography - Base sizes */
+  --font-size-xs: 10px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 24px;
+  --font-size-xl: 32px;
+
+  /* Typography - Common */
+  --font-family-primary: 'Minion Pro', 'Garamond', serif;
+  --font-family-fallback: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --letter-spacing-body: 0.25em;
+  --line-height-tight: 1;
+
+  /* Icon sizes */
+  --icon-size-small: 7.616px;
+  --icon-size-medium: 16px;
+  --icon-size-large: 25.645px;
+  --icon-height-large: 15.806px;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -164,7 +209,7 @@ body {
   display: none;
 }
 
-@media (max-width: 727px) {
+@media (max-width: 719px) /* S Breakpoint */ {
   .studio-name-img.desktop {
     display: none;
   }
@@ -258,7 +303,7 @@ body {
 }
 
 /* Show/hide grid based on viewport */
-@media (max-width: 727px) {
+@media (max-width: 719px) /* S Breakpoint */ {
   .desktop-grid {
     display: none !important;
   }
@@ -272,7 +317,7 @@ body {
   }
 }
 
-@media (min-width: 728px) {
+@media (min-width: 720px) /* M+ Breakpoint */ {
   .mobile-grid {
     display: none !important;
   }
@@ -338,7 +383,7 @@ body {
 }
 
 /* Hide desktop grid on viewports smaller than 1440px (but larger than mobile) */
-@media (max-width: 1439px) and (min-width: 728px) {
+@media (max-width: 1079px) and (min-width: 720px) /* M Breakpoint */ {
   .desktop-grid {
     display: none !important;
   }
@@ -472,7 +517,7 @@ body {
 }
 
 /* Mobile Responsive */
-@media (max-width: 727px) {
+@media (max-width: 719px) /* S Breakpoint */ {
   /* Hide desktop navigation */
   .header-nav {
     display: none;
