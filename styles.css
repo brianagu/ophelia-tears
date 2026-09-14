@@ -91,6 +91,15 @@ body {
   object-position: left center;
 }
 
+/* Logo visibility per breakpoint */
+.mobile-logo-header {
+  display: block;
+}
+
+.desktop-logo-header {
+  display: none;
+}
+
 .header-nav {
   flex: 1;
   display: flex;
@@ -112,6 +121,12 @@ body {
 
 .nav-link:hover {
   opacity: 0.7;
+}
+
+/* Hide About/Artists on S/M, show on L */
+.nav-link:nth-child(1),
+.nav-link:nth-child(2) {
+  display: none;
 }
 
 .nav-link-external {
@@ -242,6 +257,13 @@ body {
   z-index: 3;
 }
 
+.footer-logo {
+  display: none;
+  height: 42px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
 .footer-address {
   font-family: 'Minion Pro', 'Garamond', serif;
   font-size: 12px;
@@ -340,6 +362,23 @@ body {
     display: block !important;
   }
 
+  /* Logo: show mobile, hide desktop in header */
+  .mobile-logo-header {
+    display: block;
+    width: 240px;
+    height: 32px;
+  }
+
+  .desktop-logo-header {
+    display: none;
+  }
+
+  /* Show footer logo on M breakpoint */
+  .footer-logo {
+    display: block !important;
+    height: 60px;
+  }
+
   /* M Breakpoint footer layout - horizontal row */
   .footer {
     position: absolute !important;
@@ -408,6 +447,29 @@ body {
 
   .l-grid.grid-visible {
     display: block;
+  }
+
+  /* Logo swap: show desktop, hide mobile in header */
+  .mobile-logo-header {
+    display: none;
+  }
+
+  .desktop-logo-header {
+    display: block;
+    width: 240px;
+    height: 32px;
+  }
+
+  /* Show About/Artists navigation links on L breakpoint */
+  .nav-link:nth-child(1),
+  .nav-link:nth-child(2) {
+    display: inline-block;
+  }
+
+  /* Show footer logo on L breakpoint */
+  .footer-logo {
+    display: block !important;
+    height: 48px;
   }
 
   /* Hide mobile CTA on L breakpoint and above */
@@ -599,6 +661,23 @@ body {
 
 /* Mobile Responsive */
 @media (max-width: 719px) /* S Breakpoint */ {
+  /* Logo: show mobile, hide desktop in header */
+  .mobile-logo-header {
+    display: block;
+    width: 240.941px;
+    height: 32px;
+  }
+
+  .desktop-logo-header {
+    display: none;
+  }
+
+  /* Show footer logo on S breakpoint */
+  .footer-logo {
+    display: block !important;
+    height: 42px;
+  }
+
   /* Hide desktop navigation */
   .header-nav {
     display: none;
