@@ -15,10 +15,17 @@
   <div class="container">
     <!-- Header -->
     <div class="header">
-      <!-- Desktop logo (L breakpoint only) -->
+      <!-- Menu toggle (S/M breakpoints) - LEFT side -->
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Desktop logo (L breakpoint only) - CENTER on L -->
       <img class="header-logo" src="desktop-logo.svg" alt="Ophelia's Tears Studio">
 
-      <!-- Desktop navigation (L breakpoint only) -->
+      <!-- Desktop navigation (L breakpoint only) - CENTER on L -->
       <nav class="header-nav">
         <a class="nav-link" href="#about">About</a>
         <a class="nav-link" href="#artists">Artists</a>
@@ -27,27 +34,20 @@
         <a class="nav-link" href="https://venue.ink/@snakeroots.00/page/aftercare" target="_blank">Aftercare <img class="nav-arrow" src="arrow-icon.svg" alt=""></a>
       </nav>
 
-      <!-- Book Now CTA (all breakpoints) -->
+      <!-- Book Now CTA (all breakpoints) - RIGHT side -->
       <a class="header-cta" href="https://venue.ink/@snakeroots.00" target="_blank">Book Now <img class="cta-arrow" src="arrow-icon-white.svg" alt=""></a>
-
-      <!-- Menu toggle (S/M breakpoints) -->
-      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
     </div>
 
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu" id="mobileMenu">
-      <!-- Menu header: close icon + Book CTA -->
-      <div class="mobile-menu-header">
-        <button class="close-icon" id="menuClose" aria-label="Close menu">
-          <span class="close-line close-line-1"></span>
-          <span class="close-line close-line-2"></span>
-        </button>
-        <a class="header-cta menu-cta" href="https://venue.ink/@snakeroots.00" target="_blank">Book Now <img class="cta-arrow" src="arrow-icon-white.svg" alt=""></a>
-      </div>
+      <!-- Close icon (top-left) -->
+      <button class="menu-close-icon" id="menuClose" aria-label="Close menu">
+        <span class="close-line close-line-1"></span>
+        <span class="close-line close-line-2"></span>
+      </button>
+
+      <!-- Book Now CTA (top-right) -->
+      <a class="header-cta menu-cta" href="https://venue.ink/@snakeroots.00" target="_blank">Book Now <img class="cta-arrow" src="arrow-icon-white.svg" alt=""></a>
 
       <!-- Navigation links -->
       <div class="mobile-menu-content">
@@ -55,7 +55,7 @@
         <a class="menu-link" href="#artists">Artists</a>
         <a class="menu-link" href="https://venue.ink/@snakeroots.00/flash" target="_blank">Browse Flash <img class="nav-arrow" src="arrow-icon.svg" alt=""></a>
         <a class="menu-link" href="https://venue.ink/@snakeroots.00/page/info" target="_blank">Booking Info <img class="nav-arrow" src="arrow-icon.svg" alt=""></a>
-        <a class="menu-link" href="https://venue.ink/@snakeroots.00/page/aftercare" target="_blank">Aftercare</a>
+        <a class="menu-link" href="https://venue.ink/@snakeroots.00/page/aftercare" target="_blank">Aftercare <img class="nav-arrow" src="arrow-icon.svg" alt=""></a>
       </div>
 
       <!-- Menu footer -->
@@ -63,23 +63,19 @@
         <img class="footer-logo-menu" src="mobile-logo.svg" alt="Ophelia's Tears Studio">
         <p class="menu-footer-text">12 PARK ST, BROOKLYN, NY</p>
         <p class="menu-footer-text">BY APPOINTMENT ONLY</p>
-        <img class="footer-icon-menu" src="flower-icon.svg" alt="">
-        <p class="menu-footer-text">©2026 OPHELIA'S TEARS STUDIO</p>
+        <img class="footer-icon-menu" src="MENU-ICON-FLOWER.svg" alt="">
+        <p class="menu-footer-text">©<span class="year"></span> OPHELIA'S TEARS STUDIO</p>
       </div>
     </div>
 
-    <!-- Studio name / ripple container -->
+    <!-- Studio name / ripple container (uses DESKTOP-BG illustration) -->
     <div class="studio-name" id="studio-name-container">
-      <img class="studio-name-img desktop" src="studio-name-art.png" alt="Ophelia's Tear">
-      <img class="studio-name-img mobile" src="studio-name-art-mobile.png" alt="Ophelia's Tear">
+      <img class="studio-name-img" src="DESKTOP-BG-PADDING.png" alt="Ophelia's Tears illustration">
     </div>
 
-    <!-- Background illustration -->
-    <div class="desktop-bg"></div>
-
-    <!-- Hero image -->
+    <!-- Hero image (DESKTOP-HERO-IMG from Figma) -->
     <div class="hero-image">
-      <img src="hero-img-01.png" alt="Ophelia's Tears artwork">
+      <img src="DESKTOP-HERO-IMG.png" alt="Ophelia's Tears Studio tattoo artwork" width="326" height="403">
     </div>
 
     <!-- Homepage footer -->
@@ -94,16 +90,12 @@
       <p class="footer-text">BY APPOINTMENT ONLY</p>
 
       <!-- Flower icon -->
-      <img class="footer-icon" src="flower-icon.svg" alt="">
+      <img class="footer-icon" src="ICON-FLOWER.svg" alt="">
 
       <!-- Copyright -->
-      <p class="footer-text footer-copyright">©2026 OPHELIA'S TEARS STUDIO</p>
+      <p class="footer-text footer-copyright">©<span class="year"></span> OPHELIA'S TEARS STUDIO</p>
     </div>
 
-    <!-- Mobile CTA (bottom button, S/M only) -->
-    <div class="mobile-cta">
-      <a class="header-cta" href="https://venue.ink/@snakeroots.00" target="_blank">Book Now <img class="cta-arrow" src="arrow-icon-white.svg" alt=""></a>
-    </div>
   </div>
 
   <!-- S Breakpoint grid overlay (375px, 4-column) -->

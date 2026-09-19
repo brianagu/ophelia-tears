@@ -44,14 +44,16 @@ body {
   font-family: var(--font-family);
   background-color: var(--color-bg);
   overflow: hidden;
+  overflow-x: hidden;
   cursor: url('cursor.cur'), auto;
 }
 
 .container {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   background-color: var(--color-bg);
+  overflow: hidden;
 }
 
 .hidden {
@@ -68,6 +70,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
   z-index: 10;
 }
 
@@ -99,6 +102,7 @@ body {
 
 .nav-link:hover {
   opacity: 0.7;
+  text-decoration: none;
 }
 
 .nav-arrow {
@@ -110,15 +114,16 @@ body {
 
 .header-cta {
   flex: 0 0 auto;
-  width: 114px;
-  padding: 12px 16px;
-  border: 2px solid white;
-  border-radius: 2px;
+  width: 122px;
+  height: 48px;
+  padding: 13px 16px 11px 16px;
+  border: 4px solid #224B60;
+  border-radius: 0px;
   font-family: var(--font-family);
   font-size: 16px;
   font-weight: normal;
-  background-color: var(--color-cta-bg);
-  color: var(--color-cta-text);
+  background-color: #224B60;
+  color: #ffffff;
   text-decoration: none;
   cursor: pointer;
   display: flex;
@@ -127,6 +132,9 @@ body {
   justify-content: center;
   transition: opacity 0.3s ease;
   white-space: nowrap;
+  line-height: 1;
+  box-sizing: border-box;
+  box-shadow: inset 0 0 0 1px #ffffff;
 }
 
 .header-cta:hover {
@@ -158,6 +166,7 @@ body {
   background-color: var(--color-text);
   display: block;
   transition: all 0.3s ease;
+  transform-origin: center;
 }
 
 /* ---- MOBILE MENU (S/M) ---- */
@@ -165,37 +174,94 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 375px;
   height: 100vh;
   background-color: var(--color-menu-bg);
-  display: none;
+  display: flex;
   flex-direction: column;
-  z-index: 9;
+  z-index: 11;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
 
 .mobile-menu.active {
-  display: flex;
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.mobile-menu-header {
-  position: relative;
-  height: 80px;
-  padding: 24px 31px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+/* Overlay behind menu with backdrop blur */
+.mobile-menu.active::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 375px;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(0 0 0 / 20%);
+  backdrop-filter: blur(10px);
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
 }
 
-.close-icon {
-  position: absolute;
-  left: 26.8px;
-  top: 39px;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(10px);
+  }
+}
+
+.mobile-menu:not(.active)::after {
+  animation: fadeOut 0.3s ease forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    backdrop-filter: blur(10px);
+  }
+  to {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+}
+
+/* Hide menu toggle when menu is open */
+body.menu-open .menu-toggle {
+  display: none;
+}
+
+/* Dark overlay behind menu, above container */
+body.menu-open::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 375px;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Menu close icon */
+.menu-close-icon {
+  position: fixed;
+  left: 24px;
+  top: 33px;
   width: 24px;
   height: 24px;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
+  z-index: 13;
 }
 
 .close-line {
@@ -214,11 +280,14 @@ body {
   transform: rotate(45deg);
 }
 
-.menu-cta {
-  position: absolute;
-  right: 31px;
+/* Menu CTA (duplicate of header CTA, positioned in menu) */
+.mobile-menu .menu-cta {
+  position: fixed;
+  left: 229px;
   top: 24px;
-  width: 114px;
+  width: 122px;
+  height: 48px;
+  z-index: 13;
 }
 
 .mobile-menu-content {
@@ -236,6 +305,8 @@ body {
   color: var(--color-text);
   text-decoration: underline;
   text-decoration-style: dotted;
+  text-decoration-thickness: 1.1px;
+  text-underline-offset: 2.5px;
   cursor: pointer;
   display: flex;
   gap: 4px;
@@ -244,14 +315,13 @@ body {
   white-space: nowrap;
 }
 
+.menu-link:hover {
+  text-decoration: none;
+}
+
 .menu-link img {
   width: var(--icon-arrow);
   height: var(--icon-arrow-height);
-}
-
-/* Remove arrow from Aftercare link */
-.menu-link:last-child img {
-  display: none;
 }
 
 .mobile-menu-footer {
@@ -282,11 +352,10 @@ body {
 }
 
 .footer-icon-menu {
-  width: 26px;
-  height: 16px;
+  width: var(--icon-flower);
+  height: var(--icon-flower-height);
   display: block;
-  /* Flower icon color for menu: #DCC6A6 */
-  filter: hue-rotate(15deg) saturate(0.9);
+  margin-top: 8px;
 }
 
 /* ---- STUDIO NAME / RIPPLE (S/M/L) ---- */
@@ -295,12 +364,35 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: calc(100vw - 48px);
-  max-width: 100%;
-  height: auto;
-  aspect-ratio: 1;
+  width: 540px;
+  aspect-ratio: 2540 / 829;
   z-index: 1;
   pointer-events: none;
+  overflow: hidden;
+  border: 1px solid #ff8800;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+/* S Breakpoint (375–719px): fixed 540px until 590px, then scale to 672px at 719px */
+@media (max-width: 719px) {
+  .studio-name {
+    width: clamp(540px, calc(540px + (100vw - 590px) * 1.023), 672px);
+  }
+}
+
+/* M Breakpoint (720–1079px): scale from 656px to 1015px */
+@media (min-width: 720px) and (max-width: 1079px) {
+  .studio-name {
+    width: clamp(656px, calc(656px + (100vw - 720px)), 1015px);
+  }
+}
+
+/* L Breakpoint (1080px+): scale from 1002px to 1270px max */
+@media (min-width: 1080px) {
+  .studio-name {
+    width: clamp(1002px, calc(1002px + (100vw - 1080px) * 0.744), 1270px);
+  }
 }
 
 .studio-name-img {
@@ -309,7 +401,6 @@ body {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  opacity: 1;
   z-index: -1;
   display: none;
 }
@@ -337,16 +428,12 @@ body {
   inset: 0 !important;
   width: 100% !important;
   height: 100% !important;
-  opacity: 0.5 !important;
+  opacity: 1 !important;
 }
 
-/* ---- BACKGROUND ILLUSTRATION (S/M/L) ---- */
+/* ---- BACKGROUND ILLUSTRATION (now part of ripple) ---- */
 .desktop-bg {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
+  display: none; /* Illustration now served via studio-name-img ripple texture */
 }
 
 /* ---- HERO IMAGE (S/M/L) ---- */
@@ -355,42 +442,39 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 326px; /* S breakpoint */
-  height: 326px;
-  aspect-ratio: 1;
+  width: 326px;
+  height: auto;
   z-index: 2;
   pointer-events: none;
 }
 
 .hero-image img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
   pointer-events: none;
 }
 
 /* ---- FOOTER (S/M/L) ---- */
 .footer {
   position: fixed;
-  bottom: 104px;
-  left: 24px;
-  right: 24px;
-  width: calc(100% - 48px);
-  max-width: 326px;
-  margin: 0 auto;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
+  width: calc(100% - 48px);
+  max-width: clamp(326px, calc(326px + (100vw - 375px) * 0.401), 464px);
   display: flex;
   flex-direction: column;
   gap: 8px;
   align-items: center;
   text-align: center;
   z-index: 3;
+  padding: 0;
+  margin-top: clamp(32px, calc(0.453 * 100vh - 279px), 183px);
 }
 
 .footer-logo {
-  width: 326px;
-  height: 42px;
+  width: 100%;
   object-fit: contain;
 }
 
@@ -409,34 +493,16 @@ body {
   width: var(--icon-flower);
   height: var(--icon-flower-height);
   display: block;
-  /* Flower icon color for homepage: #A9CDDE */
-  filter: hue-rotate(165deg) saturate(0.8);
+  margin-top: 8px;
 }
 
 .footer-copyright {
   margin-top: 0;
 }
 
-/* ---- MOBILE CTA (S/M only) ---- */
+/* ---- MOBILE CTA (removed - CTA now always in header) ---- */
 .mobile-cta {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 80px;
-  background-color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 24px 0;
-  z-index: 2;
-  box-sizing: border-box;
-}
-
-.mobile-cta .header-cta {
-  width: 114px;
-  max-width: calc(100% - 48px);
+  display: none !important;
 }
 
 /* ---- GRID OVERLAY (S/M/L) ---- */
@@ -493,11 +559,37 @@ body {
     font-size: 32px;
   }
 
-  /* Footer logo scaling on M */
+  /* Footer on M - logo at top, address/icon/appointment on single line, copyright below */
+  .footer {
+    bottom: 32px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    justify-content: center;
+  }
+
   .footer-logo {
-    width: 464px;
-    max-width: 100%;
-    height: 60px;
+    width: 100%;
+    order: 1;
+    flex-basis: 100%;
+  }
+
+  /* Address, icon, appointment on single line */
+  .footer-text:nth-child(2) {
+    order: 2;
+  }
+  .footer-icon {
+    order: 3;
+    display: inline-block;
+    margin: 0;
+    vertical-align: middle;
+  }
+  .footer-text:nth-child(3) {
+    order: 4;
+  }
+  .footer-copyright {
+    order: 5;
+    flex-basis: 100%;
   }
 
   .mobile-menu-header {
@@ -511,20 +603,31 @@ body {
   .header {
     left: 40px;
     right: 40px;
+    justify-content: flex-start;
+    gap: 32px;
   }
 
   .header-logo {
     display: block;
     width: 226px;
     flex: 0 0 auto;
+    order: 1;
   }
 
   .header-nav {
     display: flex;
+    flex: 1;
+    justify-content: center;
+    order: 2;
   }
 
   .nav-link {
     font-size: 16px;
+  }
+
+  .header-cta {
+    order: 3;
+    flex: 0 0 auto;
   }
 
   /* Hide menu toggle on L */
@@ -545,7 +648,7 @@ body {
   /* Update footer positioning for L */
   .footer {
     position: absolute;
-    bottom: 24px;
+    bottom: 56px;
     left: 50%;
     transform: translateX(-50%);
     width: auto;
@@ -558,6 +661,30 @@ body {
     display: none; /* No logo in L footer row */
   }
 
+  /* Footer reorder on L: Address, Icon, Appointment, Copyright */
+  .footer-text:nth-child(2) {
+    order: 1;
+  }
+  .footer-icon {
+    order: 2;
+    display: inline-block;
+    margin: 0px;
+    vertical-align: middle;
+  }
+  .footer-text:nth-child(3) {
+    order: 3;
+  }
+  .footer-copyright {
+    order: 4;
+    position: absolute;
+    bottom: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    display: inline;
+    white-space: nowrap;
+  }
+
   .footer-text {
     font-size: 12px;
     display: inline;
@@ -567,24 +694,6 @@ body {
     display: inline;
   }
 
-  .footer-text:nth-of-type(2) {
-    margin-left: 16px;
-  }
-
-  .footer-copyright {
-    position: absolute;
-    bottom: -24px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: auto;
-    display: inline;
-  }
-
-  .footer-icon {
-    display: inline-block;
-    margin: 0 16px;
-    vertical-align: middle;
-  }
 }
 
 /* ---- MENU TOGGLE ANIMATIONS ---- */

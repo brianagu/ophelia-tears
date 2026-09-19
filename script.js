@@ -101,15 +101,20 @@ function createPlaneWithAspectRatio(containerWidth, containerHeight, aspectRatio
 }
 
 function initRipple() {
-  // Select the appropriate image based on viewport width
-  // Use same image for all breakpoints (S/M/L)
-  const studioImg = document.querySelector('.studio-name-img.mobile') || document.querySelector('.studio-name-img.desktop');
+  // Select the single consolidated image
+  const studioImg = document.querySelector('.studio-name-img');
   container = document.getElementById('studio-name-container');
 
-  console.log('initRipple called, viewport:', window.innerWidth, 'image complete:', studioImg.complete, 'naturalWidth:', studioImg.naturalWidth);
+  console.log('initRipple called, viewport:', window.innerWidth, 'image:', studioImg?.src);
+
+  if (!studioImg) {
+    console.error('Studio image not found in DOM');
+    return;
+  }
 
   if (!studioImg.complete || !studioImg.naturalWidth) {
-    console.warn('Image not loaded yet');
+    console.warn('Image not loaded yet, retrying...');
+    setTimeout(() => initRipple(), 100);
     return;
   }
 
@@ -118,13 +123,12 @@ function initRipple() {
     return;
   }
 
-  // Get image dimensions (handle SVG which may not have naturalWidth/Height)
-  let imgWidth = studioImg.naturalWidth || studioImg.width || studioImg.clientWidth;
-  let imgHeight = studioImg.naturalHeight || studioImg.height || studioImg.clientHeight;
+  // Get image dimensions
+  let imgWidth = studioImg.naturalWidth;
+  let imgHeight = studioImg.naturalHeight;
 
   if (!imgWidth || !imgHeight) {
-    console.warn('Image dimensions not available', { imgWidth, imgHeight, naturalW: studioImg.naturalWidth, naturalH: studioImg.naturalHeight });
-    rippleReady = false;
+    console.warn('Image dimensions not available', { imgWidth, imgHeight });
     return;
   }
 
@@ -321,20 +325,20 @@ window.addEventListener('resize', () => {
     planeMesh.geometry = createPlaneWithAspectRatio(width, height, imageAspectRatio, rippleMaterial).geometry;
   }
 
-  if (rippleMaterial) {
-    rippleMaterial.uniforms.resolution.value.set(width, height);
-  }
-
   // Check if mobile viewport changed
   updateMobileRippleState();
 });
 
 // Load sequence
 const studioImg = document.querySelector('.studio-name-img');
-if (studioImg.complete) {
-  setTimeout(() => initRipple(), 0);
+if (studioImg) {
+  if (studioImg.complete) {
+    setTimeout(() => initRipple(), 100);
+  } else {
+    studioImg.addEventListener('load', initRipple, { once: true });
+  }
 } else {
-  studioImg.addEventListener('load', initRipple, { once: true });
+  console.error('Studio image element not found');
 }
 
 // Start animation loop
@@ -400,6 +404,7 @@ const appleMeta = document.querySelector('meta[name="apple-mobile-web-app-status
 function openMobileMenu() {
   if (menuToggle) menuToggle.classList.add('active');
   if (mobileMenu) mobileMenu.classList.add('active');
+  document.body.classList.add('menu-open');
   document.body.style.overflow = 'hidden';
   // Change status bar to cream when menu opens
   if (themeColorMeta) {
@@ -414,6 +419,7 @@ function openMobileMenu() {
 function closeMobileMenu() {
   if (menuToggle) menuToggle.classList.remove('active');
   if (mobileMenu) mobileMenu.classList.remove('active');
+  document.body.classList.remove('menu-open');
   document.body.style.overflow = 'auto';
   // Change status bar back to light blue when menu closes
   if (themeColorMeta) {
@@ -426,9 +432,34 @@ function closeMobileMenu() {
 }
 
 if (menuToggle) {
-  menuToggle.addEventListener('click', openMobileMenu);
+  menuToggle.addEventListener('click', () => {
+    if (mobileMenu && mobileMenu.classList.contains('active')) {
+      closeMobileMenu();
+    } else {
+      openMobileMenu();
+    }
+  });
 }
 
+// Menu close button
 if (menuClose) {
   menuClose.addEventListener('click', closeMobileMenu);
 }
+
+// Close menu when overlay is clicked
+document.addEventListener('click', (e) => {
+  const isMenuOpen = mobileMenu && mobileMenu.classList.contains('active');
+  const isMenuOrMenuContent = e.target.closest('.mobile-menu, .menu-toggle, .menu-close-icon');
+
+  // Close menu if it's open, click is not on menu/toggle/close-icon, and click is in overlay area (right of 375px)
+  if (isMenuOpen && !isMenuOrMenuContent && e.clientX > 375) {
+    closeMobileMenu();
+  }
+});
+
+// ---- Auto-update copyright year ----
+const yearElements = document.querySelectorAll('.year');
+const currentYear = new Date().getFullYear();
+yearElements.forEach(el => {
+  el.textContent = currentYear;
+});
