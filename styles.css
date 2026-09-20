@@ -369,7 +369,6 @@ body.menu-open::before {
   z-index: 1;
   pointer-events: none;
   overflow: hidden;
-  border: 1px solid #ff8800;
   padding: 30px;
   box-sizing: border-box;
 }
@@ -392,6 +391,13 @@ body.menu-open::before {
 @media (min-width: 1080px) {
   .studio-name {
     width: clamp(1002px, calc(1002px + (100vw - 1080px) * 0.744), 1270px);
+  }
+}
+
+/* Height-based scaling: when viewport height < 690px, scale down responsively */
+@media (max-height: 689px) {
+  .studio-name {
+    width: clamp(240px, 100vh, 672px);
   }
 }
 
@@ -442,10 +448,31 @@ body.menu-open::before {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 326px;
+  width: 326px; /* S: fixed at 326px */
   height: auto;
   z-index: 2;
   pointer-events: none;
+}
+
+/* M Breakpoint: scale from 326px at 720px to 365px at 1079px */
+@media (min-width: 720px) and (max-width: 1079px) {
+  .hero-image {
+    width: clamp(326px, calc(326px + (100vw - 720px) * 0.1086), 365px);
+  }
+}
+
+/* L Breakpoint: scale from 365px at 1080px to 460px at 1440px */
+@media (min-width: 1080px) {
+  .hero-image {
+    width: clamp(365px, calc(365px + (100vw - 1080px) * 0.264), 460px);
+  }
+}
+
+/* Height-based scaling: when viewport height < 690px, scale down responsively */
+@media (max-height: 689px) {
+  .hero-image {
+    width: clamp(120px, 40vh, 326px);
+  }
 }
 
 .hero-image img {
