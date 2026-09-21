@@ -377,6 +377,7 @@ body.menu-open::before {
 @media (max-width: 719px) {
   .studio-name {
     width: clamp(540px, calc(540px + (100vw - 590px) * 1.023), 672px);
+    max-height: clamp(150px, calc(100vh - 200px), 400px);
   }
 }
 
@@ -452,6 +453,13 @@ body.menu-open::before {
   height: auto;
   z-index: 2;
   pointer-events: none;
+}
+
+/* S Breakpoint: constrain height to available vertical space */
+@media (max-width: 719px) {
+  .hero-image {
+    max-height: clamp(200px, calc(100vh - 200px), 450px);
+  }
 }
 
 /* M Breakpoint: scale from 326px at 720px to 365px at 1079px */
