@@ -52,6 +52,7 @@ body {
   position: relative;
   width: 100%;
   height: 100vh;
+  height: 100dvh;
   background-color: var(--color-bg);
   overflow: hidden;
 }
@@ -176,6 +177,7 @@ body {
   left: 0;
   width: 375px;
   height: 100vh;
+  height: 100dvh;
   background-color: var(--color-menu-bg);
   display: flex;
   flex-direction: column;
@@ -378,6 +380,7 @@ body.menu-open::before {
   .studio-name {
     width: clamp(540px, calc(540px + (100vw - 590px) * 1.023), 672px);
     max-height: clamp(150px, calc(100vh - 200px), 400px);
+    max-height: clamp(150px, calc(100dvh - 200px), 400px);
   }
 }
 
@@ -399,6 +402,7 @@ body.menu-open::before {
 @media (max-height: 689px) {
   .studio-name {
     width: clamp(240px, 100vh, 672px);
+    width: clamp(240px, 100dvh, 672px);
   }
 }
 
@@ -459,6 +463,7 @@ body.menu-open::before {
 @media (max-width: 719px) {
   .hero-image {
     max-height: clamp(200px, calc(100vh - 200px), 450px);
+    max-height: clamp(200px, calc(100dvh - 200px), 450px);
   }
 }
 
@@ -480,6 +485,7 @@ body.menu-open::before {
 @media (max-height: 689px) {
   .hero-image {
     width: clamp(120px, 40vh, 326px);
+    width: clamp(120px, 40dvh, 326px);
   }
 }
 
@@ -506,6 +512,7 @@ body.menu-open::before {
   z-index: 3;
   padding: 0;
   margin-top: clamp(32px, calc(0.453 * 100vh - 279px), 183px);
+  margin-top: clamp(32px, calc(0.453 * 100dvh - 279px), 183px);
 }
 
 .footer-logo {
@@ -556,16 +563,19 @@ body.menu-open::before {
 .s-grid {
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
 }
 
 .m-grid {
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
 }
 
 .l-grid {
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
 }
 
 /* Show/hide grids per breakpoint */
