@@ -178,8 +178,8 @@ body {
   width: 375px;
   height: 100vh;
   height: 100dvh;
-  background-color: var(--color-bg);
-  display: flex;
+  background-color: var(--color-menu-bg);
+  display: none;
   flex-direction: column;
   z-index: 11;
   opacity: 0;
@@ -188,7 +188,7 @@ body {
 }
 
 .mobile-menu.active {
-  background-color: var(--color-menu-bg);
+  display: flex;
   opacity: 1;
   pointer-events: auto;
 }

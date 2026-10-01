@@ -411,7 +411,11 @@ function setThemeColor(color) {
 
 function openMobileMenu() {
   if (menuToggle) menuToggle.classList.add('active');
-  if (mobileMenu) mobileMenu.classList.add('active');
+  if (mobileMenu) {
+    // Clear any inline display style so CSS class (display:flex from .active) takes effect
+    mobileMenu.style.display = '';
+    mobileMenu.classList.add('active');
+  }
   document.body.classList.add('menu-open');
   document.body.style.overflow = 'hidden';
   // Change status bar to cream when menu opens
@@ -424,7 +428,19 @@ function openMobileMenu() {
 
 function closeMobileMenu() {
   if (menuToggle) menuToggle.classList.remove('active');
-  if (mobileMenu) mobileMenu.classList.remove('active');
+  if (mobileMenu) {
+    mobileMenu.classList.remove('active');
+    // Wait for opacity fade-out to complete before setting display:none
+    // This ensures Safari 26 stops sampling the element (opacity:0 alone isn't enough)
+    // Use transitionend listener to fire exactly when the CSS transition finishes
+    const transitionHandler = function(e) {
+      if (e.propertyName === 'opacity' && !mobileMenu.classList.contains('active')) {
+        mobileMenu.style.display = 'none';
+      }
+      mobileMenu.removeEventListener('transitionend', transitionHandler);
+    };
+    mobileMenu.addEventListener('transitionend', transitionHandler);
+  }
   document.body.classList.remove('menu-open');
   document.body.style.overflow = 'auto';
   // Change status bar back to light blue when menu closes
