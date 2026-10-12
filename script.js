@@ -401,16 +401,26 @@ const mobileMenu = document.getElementById('mobileMenu');
 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 const appleMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
 
+// Helper: force theme-color update by re-inserting the meta element (fixes Safari repaint quirk)
+function setThemeColor(color) {
+  if (!themeColorMeta) return;
+  themeColorMeta.remove();
+  themeColorMeta.setAttribute('content', color);
+  document.head.appendChild(themeColorMeta);
+}
+
 function openMobileMenu() {
   if (menuToggle) menuToggle.classList.add('active');
-  if (mobileMenu) mobileMenu.classList.add('active');
+  if (mobileMenu) {
+    // Clear any inline display style so CSS class (display:flex from .active) takes effect
+    mobileMenu.style.display = '';
+    mobileMenu.classList.add('active');
+  }
   document.body.classList.add('menu-open');
   document.body.style.overflow = 'hidden';
   // Change status bar to cream when menu opens
-  if (themeColorMeta) {
-    themeColorMeta.setAttribute('content', '#fffaf3');
-    console.log('Status bar color changed to cream');
-  }
+  setThemeColor('#fffaf3');
+  console.log('Status bar color changed to cream');
   if (appleMeta) {
     appleMeta.setAttribute('content', 'black');
   }
@@ -418,14 +428,24 @@ function openMobileMenu() {
 
 function closeMobileMenu() {
   if (menuToggle) menuToggle.classList.remove('active');
-  if (mobileMenu) mobileMenu.classList.remove('active');
+  if (mobileMenu) {
+    mobileMenu.classList.remove('active');
+    // Wait for opacity fade-out to complete before setting display:none
+    // This ensures Safari 26 stops sampling the element (opacity:0 alone isn't enough)
+    // Use transitionend listener to fire exactly when the CSS transition finishes
+    const transitionHandler = function(e) {
+      if (e.propertyName === 'opacity' && !mobileMenu.classList.contains('active')) {
+        mobileMenu.style.display = 'none';
+      }
+      mobileMenu.removeEventListener('transitionend', transitionHandler);
+    };
+    mobileMenu.addEventListener('transitionend', transitionHandler);
+  }
   document.body.classList.remove('menu-open');
   document.body.style.overflow = 'auto';
   // Change status bar back to light blue when menu closes
-  if (themeColorMeta) {
-    themeColorMeta.setAttribute('content', '#d5f1ff');
-    console.log('Status bar color changed to light blue');
-  }
+  setThemeColor('#d5f1ff');
+  console.log('Status bar color changed to light blue');
   if (appleMeta) {
     appleMeta.setAttribute('content', 'black-translucent');
   }
@@ -446,13 +466,18 @@ if (menuClose) {
   menuClose.addEventListener('click', closeMobileMenu);
 }
 
+// Close menu when nav links or CTA are tapped
+document.querySelectorAll('.mobile-menu .menu-link, .mobile-menu .menu-cta').forEach(link => {
+  link.addEventListener('click', closeMobileMenu);
+});
+
 // Close menu when overlay is clicked
 document.addEventListener('click', (e) => {
   const isMenuOpen = mobileMenu && mobileMenu.classList.contains('active');
   const isMenuOrMenuContent = e.target.closest('.mobile-menu, .menu-toggle, .menu-close-icon');
 
-  // Close menu if it's open, click is not on menu/toggle/close-icon, and click is in overlay area (right of 375px)
-  if (isMenuOpen && !isMenuOrMenuContent && e.clientX > 375) {
+  // Close menu if it's open and click is not on menu/toggle/close-icon
+  if (isMenuOpen && !isMenuOrMenuContent) {
     closeMobileMenu();
   }
 });
